@@ -1,0 +1,100 @@
+import { useParams } from "react-router-dom";
+import { useCreateRaportMutation } from "../../slices/mentorApiSlice";
+import Loader from "../loader/Loader";
+import "./raportForm.css";
+import { useState } from "react";
+
+const RaportForm = ({ setDisplay }) => {
+  const { studentId } = useParams();
+  const [title, setTitle] = useState("");
+  const [chapter, setChapter] = useState("");
+  const [verse, setVerse] = useState("");
+  const [page, setPage] = useState("");
+
+  const [createRaport, { isLoading }] = useCreateRaportMutation();
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await createRaport({
+        title,
+        chapter,
+        verse,
+        page,
+        studentId,
+      }).unwrap();
+      console.log(res);
+    } catch (err) {
+      console.error(err?.data?.message || err.error);
+    }
+  };
+  return (
+    <div className="student-new-container raport-form">
+      <form className="student-new-card create-student" onSubmit={handleSubmit}>
+        <span
+          className="close-create-students"
+          onClick={() => setDisplay(false)}
+        >
+          <svg
+            className="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="white"
+            viewBox="0 0 20 20"
+          >
+            <path
+              stroke="currentColor"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
+              d="m13 7-6 6m0-6 6 6m6-3a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
+            />
+          </svg>
+        </span>
+        <h3>New</h3>
+        <div className="inputBox">
+          <input
+            type="text"
+            required="required"
+            onChange={(e) => setTitle(e.target.value)}
+          />
+          <span>Surah</span>
+        </div>
+        <div className="inputBox">
+          <input
+            type="number"
+            required="required"
+            min={0}
+            onChange={(e) => setChapter(e.target.value)}
+          />
+          <span>Chapter</span>
+        </div>
+
+        <div className="inputBox">
+          <input
+            type="number"
+            required="required"
+            min={0}
+            onChange={(e) => setVerse(e.target.value)}
+          />
+          <span>Verse</span>
+        </div>
+
+        <div className="inputBox">
+          <input
+            type="number"
+            required="required"
+            min={0}
+            onChange={(e) => setPage(e.target.value)}
+          />
+          <span>Page</span>
+        </div>
+
+        <button className="enter">Add</button>
+      </form>
+      {isLoading && <Loader />}
+    </div>
+  );
+};
+
+export default RaportForm;

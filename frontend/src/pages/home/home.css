@@ -1,0 +1,30 @@
+.home-container {
+  display: flex;
+  flex-direction: column;
+  /* height: 100vh; */
+  padding: 1em;
+}
+
+.home-wrapper {
+  max-width: 300px;
+}
+
+.home-item.top {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  margin-top: 1em;
+  margin-bottom: 1em;
+}
+
+.home-item.bottom {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1em;
+}
+
+.home-item.bottom .second {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+}

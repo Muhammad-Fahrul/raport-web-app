@@ -1,0 +1,30 @@
+.student-new-container.raport-form {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.651);
+}
+
+.student-new-container.raport-form .student-new-card {
+  max-width: 200px;
+  height: 300px;
+  padding: 1em 0.3em 0;
+  background-color: #fff;
+}
+
+.student-new-container.raport-form .student-new-card .inputBox {
+  width: 80%;
+  height: 20px;
+}
+
+.student-new-container.raport-form .student-new-card.create-student {
+  position: relative;
+}
+
+.close-create-students {
+  position: absolute;
+  width: 25px;
+  height: 25px;
+  bottom: -30px;
+  right: 0;
+  cursor: pointer;
+}
