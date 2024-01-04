@@ -26,10 +26,12 @@ app.use("/api/users", userRoute);
 
 if (process.env.NODE_ENV === "production") {
   const __dirname = path.resolve();
-  app.use(express.static(path.join(__dirname, "/frontend/dist")));
+  app.use(express.static(path.join(__dirname, "/frontend/staticsite")));
 
   app.get("*", (req, res) => {
-    res.sendFile(path.resolve(__dirname, "frontend", "dist", "index.html"));
+    res.sendFile(
+      path.resolve(__dirname, "frontend", "staticsite", "index.html")
+    );
   });
 } else {
   app.get("/", (req, res) => {
