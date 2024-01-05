@@ -54,11 +54,23 @@ const logoutUser = (req, res) => {
 };
 
 const getRaport = asyncHandler(async (req, res) => {
+  const { userId } = req.user;
   const studentId = req.params.studentId;
+
+  const student = await Student.findOne({ _id: studentId });
+  if (
+    userId !== student.mentorId.toString() &&
+    userId !== student._id.toString()
+  ) {
+    res.status(403);
+    throw new Error("You are not allowed");
+  }
+
   const students = await Raport.find({ studentId });
 
   res.status(200).json(students);
 });
+
 const getTopStudents = asyncHandler(async (req, res) => {
   const topStudents = await Student.aggregate([
     {

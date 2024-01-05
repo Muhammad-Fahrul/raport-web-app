@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import asyncHandler from "express-async-handler";
+import Student from "../models/studentModel.js";
 
 const verifyToken = (req, res, next) => {
   let token;
@@ -7,47 +7,42 @@ const verifyToken = (req, res, next) => {
   token = req.cookies.jwt;
 
   if (token) {
-    jwt.verify(token, process.env.JWT_SECRET, (err, user) => {
-      if (err) res.status(401).json("Token is not valid");
-      req.user = user;
+    try {
+      const decoded = jwt.verify(token, process.env.JWT_SECRET);
+      req.user = decoded;
       next();
-    });
+    } catch (error) {
+      res.status(403);
+      throw new Error("you are not allowed to do this");
+    }
   } else {
-    return res.status(401).json("You are not authenticated");
+    res.status(401);
+    throw new Error("You are not authenticated");
   }
 };
 
-const mentorProtect = asyncHandler(async (req, res, next) => {
+const mentorProtect = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user.isMentor) {
       next();
-    } else {
-      res.status(403);
-      throw new Error("You are not allow to do this");
     }
   });
-});
+};
 
-const studentProtect = asyncHandler(async (req, res, next) => {
+const studentProtect = (req, res, next) => {
   verifyToken(req, res, () => {
     if (!req.user.isMentor) {
       next();
-    } else {
-      res.status(403);
-      throw new Error("You are not allow to do this");
     }
   });
-});
+};
 
-const mentorStudentProtect = asyncHandler(async (req, res, next) => {
+const mentorStudentProtect = (req, res, next) => {
   verifyToken(req, res, () => {
     if (req.user) {
       next();
-    } else {
-      res.status(404);
-      throw new Error("Please log in first");
     }
   });
-});
+};
 
 export { mentorProtect, studentProtect, mentorStudentProtect };
