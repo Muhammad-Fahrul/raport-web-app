@@ -13,4 +13,9 @@ export default defineConfig({
       },
     },
   },
+  build: {
+    outDir: "staticsite",
+  },
 });
+
+// https://clean-cyan-tiara.cyclic.app/

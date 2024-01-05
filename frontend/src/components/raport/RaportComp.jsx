@@ -1,18 +1,23 @@
 import { DataGrid } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { useDelRaportMutation } from "../../slices/mentorApiSlice";
+import Loader from "../loader/Loader";
 const RaportComp = ({ raport }) => {
   const userInfo = useSelector((state) => state.auth.userInfo);
 
-  const [delRaport] = useDelRaportMutation();
+  const [delRaport, { isLoading }] = useDelRaportMutation();
 
   const handleDelete = (e, id) => {
     e.preventDefault();
     const del = async () => {
-      try {
-        await delRaport({ id });
-      } catch (err) {
-        console.error(err?.data?.message || err.error);
+      if (confirm("anda yakin ingin menghapusnya?")) {
+        try {
+          await delRaport({ id });
+          alert(`${id} berhasil dihapus`);
+        } catch (err) {
+          console.error(err);
+          alert(`${id} gagal dihapus`);
+        }
       }
     };
     del();
@@ -21,26 +26,43 @@ const RaportComp = ({ raport }) => {
     {
       field: "title",
       headerName: "Surah",
-      width: userInfo.isMentor ? 90 : 130,
+      width: 100,
+      sortable: false,
     },
     {
       field: "chapter",
       headerName: "Chapter",
-      width: 63,
+      width: 75,
+      sortable: false,
+      align: "center",
+      headerAlign: "center",
     },
     {
       field: "verse",
       headerName: "Verse",
-      width: 40,
+      width: 60,
+      sortable: false,
+      align: "center",
+      headerAlign: "center",
     },
-    { field: "page", headerName: "Page", width: 40 },
+    {
+      field: "page",
+      headerName: "Page",
+      width: 60,
+      sortable: false,
+      align: "center",
+      headerAlign: "center",
+    },
   ];
 
   if (userInfo && userInfo.isMentor) {
     columns.push({
       field: "action",
-      headerName: "",
+      headerName: "Del",
       width: 10,
+      sortable: false,
+      headerAlign: "center",
+      align: "center",
       renderCell: (params) => {
         return (
           <div>
@@ -65,12 +87,16 @@ const RaportComp = ({ raport }) => {
     });
   }
   return (
-    <DataGrid
-      rows={raport}
-      disableRowSelectionOnClick
-      getRowId={(row) => row._id}
-      columns={columns}
-    />
+    <>
+      <DataGrid
+        rows={raport}
+        disableRowSelectionOnClick
+        getRowId={(row) => row._id}
+        columns={columns}
+        disableColumnMenu
+      />
+      {isLoading && <Loader />}
+    </>
   );
 };
 

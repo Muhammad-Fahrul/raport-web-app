@@ -4,12 +4,13 @@ import Loader from "../../components/loader/Loader.jsx";
 
 import "./raport.css";
 import { useSelector } from "react-redux";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import RaportForm from "../../components/raportForm/RaportForm.jsx";
 import Error from "../../components/error/Error.jsx";
 import RaportComp from "../../components/raport/RaportComp.jsx";
 
 const Raport = () => {
+  const [studentRaport, setStudentRaport] = useState([]);
   const { studentId, studentName } = useParams();
   const [display, setDisplay] = useState(false);
   const {
@@ -22,9 +23,11 @@ const Raport = () => {
 
   const userInfo = useSelector((state) => state.auth.userInfo);
 
-  if (isError) {
-    return <Error message={error.data?.message} />;
-  }
+  useEffect(() => {
+    if (isSuccess) {
+      setStudentRaport(raport);
+    }
+  }, [isSuccess, raport]);
 
   return (
     <div className="students-container">
@@ -56,12 +59,15 @@ const Raport = () => {
       <ul className="students-wrapper">
         <h2>Achivement ({studentName})</h2>
         <div className="students-wrapper-items">
-          {isSuccess &&
-            (raport.length < 1 ? (
+          {isSuccess ? (
+            studentRaport.length < 1 ? (
               <h1>Belum ada pencapaian</h1>
             ) : (
-              <RaportComp raport={raport} />
-            ))}
+              <RaportComp raport={studentRaport} />
+            )
+          ) : (
+            isError && <p>{error?.data?.message || "internal server error"}</p>
+          )}
         </div>
       </ul>
       {isLoading && <Loader />}

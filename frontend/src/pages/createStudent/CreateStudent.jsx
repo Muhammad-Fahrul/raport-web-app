@@ -19,9 +19,13 @@ const CreateStudent = () => {
           phoneNumber,
           password,
         }).unwrap();
-        console.log(res);
+        alert(`${username} berhasil ditambahkan`);
+        setUsername("");
+        setphoneNumber("");
+        setPassword("");
       } catch (err) {
         console.error(err?.data?.message || err.error);
+        alert(`${username} gagal ditambahkan`);
       }
     };
     addStudent();
@@ -34,6 +38,7 @@ const CreateStudent = () => {
           <input
             type="text"
             required="required"
+            value={username}
             onChange={(e) => setUsername(e.target.value)}
           />
           <span>Username</span>
@@ -42,6 +47,7 @@ const CreateStudent = () => {
           <input
             type="text"
             required="required"
+            value={phoneNumber}
             onChange={(e) => setphoneNumber(e.target.value)}
           />
           <span>Number</span>
@@ -51,6 +57,7 @@ const CreateStudent = () => {
           <input
             type="password"
             required="required"
+            value={password}
             onChange={(e) => setPassword(e.target.value)}
           />
           <span>Password</span>

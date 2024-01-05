@@ -73,9 +73,7 @@ const createStudent = asyncHandler(async (req, res) => {
 
   const student = await Student.create({ ...req.body, mentorId });
 
-  const newStudent = student.sanitizeStudent();
-
-  res.status(201).json(newStudent);
+  res.status(201).json(student);
 });
 
 // @desc    Get Students

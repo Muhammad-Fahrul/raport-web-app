@@ -21,7 +21,6 @@
 }
 
 .flip-card__input {
-  width: 250px;
   height: 40px;
   border-radius: 5px;
   border: 2px solid var(--main-color);

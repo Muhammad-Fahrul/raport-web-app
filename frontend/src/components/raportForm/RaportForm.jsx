@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useCreateRaportMutation } from "../../slices/mentorApiSlice";
 import Loader from "../loader/Loader";
 import "./raportForm.css";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 
 const RaportForm = ({ setDisplay }) => {
   const { studentId } = useParams();
@@ -11,7 +11,8 @@ const RaportForm = ({ setDisplay }) => {
   const [verse, setVerse] = useState("");
   const [page, setPage] = useState("");
 
-  const [createRaport, { isLoading }] = useCreateRaportMutation();
+  const [createRaport, { isLoading, isSuccess, isError, error }] =
+    useCreateRaportMutation();
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -23,11 +24,16 @@ const RaportForm = ({ setDisplay }) => {
         page,
         studentId,
       }).unwrap();
-      console.log(res);
     } catch (err) {
       console.error(err?.data?.message || err.error);
     }
   };
+
+  useEffect(() => {
+    if (isSuccess) {
+      alert(`${title} berhasil ditambakan`);
+    }
+  }, [isSuccess, title]);
   return (
     <div className="student-new-container raport-form">
       <form className="student-new-card create-student" onSubmit={handleSubmit}>
@@ -51,7 +57,13 @@ const RaportForm = ({ setDisplay }) => {
             />
           </svg>
         </span>
-        <h3>New</h3>
+        <div style={{ textAlign: "center" }}>
+          <h3>New</h3>
+
+          <p style={{ opacity: isError ? 1 : 0, color: "red" }}>
+            {error?.data?.message || "internal server error"}
+          </p>
+        </div>
         <div className="inputBox">
           <input
             type="text"

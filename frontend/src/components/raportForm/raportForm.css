@@ -5,6 +5,8 @@
 }
 
 .student-new-container.raport-form .student-new-card {
+  justify-content: flex-start;
+  gap: 0.2em;
   max-width: 200px;
   height: 300px;
   padding: 1em 0.3em 0;
@@ -13,7 +15,7 @@
 
 .student-new-container.raport-form .student-new-card .inputBox {
   width: 80%;
-  height: 20px;
+  height: 60px;
 }
 
 .student-new-container.raport-form .student-new-card.create-student {
