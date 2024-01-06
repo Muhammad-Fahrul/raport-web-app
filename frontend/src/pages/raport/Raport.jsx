@@ -31,7 +31,7 @@ const Raport = () => {
 
   return (
     <div className="students-container">
-      {userInfo && userInfo.isMentor && (
+      {userInfo && userInfo.isMentor && !isError && (
         <button
           className="Btn new-students-btn"
           onClick={() => setDisplay(true)}
@@ -57,17 +57,19 @@ const Raport = () => {
         </button>
       )}
       <ul className="students-wrapper">
-        <h2>Achivement ({studentName})</h2>
+        {!isError ? (
+          <h2>Achivement ({studentName})</h2>
+        ) : (
+          <p>{error?.data?.message || "internal server error"}</p>
+        )}
+
         <div className="students-wrapper-items">
-          {isSuccess ? (
-            studentRaport.length < 1 ? (
+          {isSuccess &&
+            (studentRaport.length < 1 ? (
               <h1>Belum ada pencapaian</h1>
             ) : (
               <RaportComp raport={studentRaport} />
-            )
-          ) : (
-            isError && <p>{error?.data?.message || "internal server error"}</p>
-          )}
+            ))}
         </div>
       </ul>
       {isLoading && <Loader />}

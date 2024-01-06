@@ -58,6 +58,7 @@ const getRaport = asyncHandler(async (req, res) => {
   const studentId = req.params.studentId;
 
   const student = await Student.findOne({ _id: studentId });
+
   if (
     userId !== student.mentorId.toString() &&
     userId !== student._id.toString()

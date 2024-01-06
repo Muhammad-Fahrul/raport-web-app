@@ -2,7 +2,7 @@ import express from "express";
 import {
   updateMentorProfile,
   createStudent,
-  getStudents,
+  getStudentsByMentorId,
   addRaport,
   deleteRaportById,
 } from "../handlers/mentorHandler.js";
@@ -13,8 +13,8 @@ router.route("/profile").put(mentorProtect, updateMentorProfile);
 router
   .route("/students")
   .post(mentorProtect, createStudent)
-  .get(mentorProtect, getStudents);
-router.route("/students/raports").post(mentorProtect, addRaport);
+  .get(mentorProtect, getStudentsByMentorId);
+router.route("/students/raports/:studentId").post(mentorProtect, addRaport);
 router
   .route("/students/raports/:raportId")
   .delete(mentorProtect, deleteRaportById);

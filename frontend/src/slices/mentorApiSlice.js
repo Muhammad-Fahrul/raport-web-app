@@ -20,7 +20,7 @@ export const mentorApiSlice = apiSlice.injectEndpoints({
     }),
     createRaport: builder.mutation({
       query: (data) => ({
-        url: `${MENTOR_URL}/students/raports`,
+        url: `${MENTOR_URL}/students/raports/${data.studentId}`,
         method: "POST",
         body: data,
       }),

@@ -79,7 +79,7 @@ const createStudent = asyncHandler(async (req, res) => {
 // @desc    Get Students
 // @route   GET /api/mentors/students
 // @access  Private (Mentor only)
-const getStudents = asyncHandler(async (req, res) => {
+const getStudentsByMentorId = asyncHandler(async (req, res) => {
   const mentorId = req.user.userId;
   const students = await Student.find({ mentorId }, { password: 0 });
 
@@ -90,8 +90,15 @@ const getStudents = asyncHandler(async (req, res) => {
 // @route   POST /api/mentors/students/raport
 // @access  Private (Mentor only)
 const addRaport = asyncHandler(async (req, res) => {
-  const { title, chapter, page, verse, studentId } = req.body;
+  const { userId } = req.user;
+  const { title, chapter, page, verse } = req.body;
+  const { studentId } = req.params;
+  const student = await Student.findOne({ _id: studentId });
 
+  if (userId !== student._id.toString()) {
+    res.status(403);
+    throw new Error("You are not allowed buddy");
+  }
   const newRaport = {
     title: title,
     chapter: +chapter,
@@ -117,7 +124,7 @@ export {
   registerMentor,
   updateMentorProfile,
   createStudent,
-  getStudents,
+  getStudentsByMentorId,
   addRaport,
   deleteRaportById,
 };
