@@ -16,7 +16,7 @@ export const mentorApiSlice = apiSlice.injectEndpoints({
         url: `${MENTOR_URL}/students`,
         method: "GET",
       }),
-      providesTags: ["Student"],
+      providesTags: ["Raport", "Student"],
     }),
     createRaport: builder.mutation({
       query: (data) => ({
@@ -24,14 +24,14 @@ export const mentorApiSlice = apiSlice.injectEndpoints({
         method: "POST",
         body: data,
       }),
-      invalidatesTags: ["Raport"],
+      invalidatesTags: ["Raport", "Student"],
     }),
     delRaport: builder.mutation({
       query: (data) => ({
         url: `${MENTOR_URL}/students/raports/${data.id}`,
         method: "DELETE",
       }),
-      invalidatesTags: ["Raport"],
+      invalidatesTags: ["Raport", "Student"],
     }),
   }),
 });

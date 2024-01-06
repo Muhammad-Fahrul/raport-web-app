@@ -22,7 +22,7 @@ const TopStudents = () => {
     <div className="students-container">
       <ul className="students-wrapper">
         <h2>Top Students</h2>
-        <div className="students-wrapper-items">
+        <div className="students-wrapper-items ">
           {isSuccess &&
             (topStudents.length < 1 ? (
               <h1>belum ada siswa</h1>
@@ -37,10 +37,8 @@ const TopStudents = () => {
                       <span>{i + 1}</span>
                     </div>
                     <div className="cardCollectiontextBox">
-                      <p className="cardCollectionp">{student.username}</p>
-                      <div className="cardCollectiontextContent">
-                        <p className="cardCollectionh">{student.total}</p>
-                      </div>
+                      <p className="">{student.username}</p>
+                      <p className="">{student.total || 0}</p>
                     </div>
                   </li>
                 </Link>

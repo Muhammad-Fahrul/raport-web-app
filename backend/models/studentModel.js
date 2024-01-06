@@ -19,7 +19,7 @@ const studentSchema = mongoose.Schema(
       type: String,
     },
     mentorId: {
-      type: mongoose.Schema.Types.ObjectId,
+      type: String,
       ref: "Mentor",
       required: true,
     },

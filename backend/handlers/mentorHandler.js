@@ -3,6 +3,7 @@ import Mentor from "../models/mentorModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import Student from "../models/studentModel.js";
 import Raport from "../models/raportModel.js";
+import mongoose from "mongoose";
 
 // @desc    Register user & get token
 // @route   POST /api/mentors
@@ -80,9 +81,35 @@ const createStudent = asyncHandler(async (req, res) => {
 // @route   GET /api/mentors/students
 // @access  Private (Mentor only)
 const getStudentsByMentorId = asyncHandler(async (req, res) => {
-  const mentorId = req.user.userId;
-  const students = await Student.find({ mentorId }, { password: 0 });
+  const mentorId = req.user.userId; // Ambil ID mentor dari request, sesuaikan dengan kebutuhan Anda
 
+  const students = await Student.aggregate([
+    {
+      $match: {
+        mentorId,
+      },
+    },
+    {
+      $lookup: {
+        from: "raports",
+        localField: "_id",
+        foreignField: "studentId",
+        as: "raports",
+      },
+    },
+    {
+      $addFields: {
+        lastRaport: { $arrayElemAt: ["$raports", -1] },
+      },
+    },
+    {
+      $project: {
+        _id: 1,
+        username: 1,
+        raport: "$lastRaport",
+      },
+    },
+  ]);
   res.status(200).json(students);
 });
 
@@ -95,7 +122,7 @@ const addRaport = asyncHandler(async (req, res) => {
   const { studentId } = req.params;
   const student = await Student.findOne({ _id: studentId });
 
-  if (userId !== student._id.toString()) {
+  if (userId !== student.mentorId.toString()) {
     res.status(403);
     throw new Error("You are not allowed buddy");
   }
@@ -112,6 +139,9 @@ const addRaport = asyncHandler(async (req, res) => {
   res.status(201).json(raport);
 });
 
+// @desc    Delelte Student raport
+// @route   POST /api/mentors/students/raport/:raportId
+// @access  Private (Mentor only)
 const deleteRaportById = asyncHandler(async (req, res) => {
   const { raportId } = req.params;
 

@@ -36,7 +36,16 @@ const Students = () => {
                     <div className="cardCollectiontextBox">
                       <p className="cardCollectionp">{student.username}</p>
                       <div className="cardCollectiontextContent">
-                        <p className="cardCollectionh">{student.phoneNumber}</p>
+                        {student.raport && (
+                          <>
+                            <p className="cardCollectionh">
+                              {student.raport.title}
+                            </p>
+                            <p className="cardCollectionh">
+                              {student.raport.verse}
+                            </p>
+                          </>
+                        )}
                       </div>
                       <div></div>
                     </div>

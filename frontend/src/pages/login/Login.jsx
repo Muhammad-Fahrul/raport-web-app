@@ -24,7 +24,6 @@ const Login = () => {
   const [login, { isLoading, isError, error }] = useLoginMutation();
 
   const handleSubmit = (e, type) => {
-    console.log(type);
     e.preventDefault();
     const phoneNumber = type === "mentor" ? phoneNumberM : phoneNumberS;
     const password = type === "mentor" ? passwordM : passwordS;

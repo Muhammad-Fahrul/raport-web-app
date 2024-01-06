@@ -21,13 +21,17 @@ const Home = () => {
           ) : userInfo.isMentor ? (
             <div className="second">
               <h2>Welcome</h2>
-              <p>Start your student marking achievment</p>
+              <p>
+                Start your student marking <strong>Achievement</strong>
+              </p>
               <Link to="/me/students">
-                <button className="flip-card__btn">lets Go</button>
+                <button className="flip-card__btn">Let&#39;s Go</button>
               </Link>
             </div>
           ) : (
-            <h1>Welcome, see how far your achievments are</h1>
+            <h1>
+              Welcome, see how far your <strong>Achievement</strong> are
+            </h1>
           )}
         </div>
       </div>
