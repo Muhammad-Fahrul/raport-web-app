@@ -59,10 +59,7 @@ const getRaport = asyncHandler(async (req, res) => {
 
   const student = await Student.findOne({ _id: studentId });
 
-  if (
-    userId !== student.mentorId.toString() &&
-    userId !== student._id.toString()
-  ) {
+  if (userId !== student.mentorId && userId !== student._id.toString()) {
     res.status(403);
     throw new Error("You are not allowed");
   }

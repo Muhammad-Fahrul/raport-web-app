@@ -45,14 +45,6 @@ const RaportComp = ({ raport }) => {
       align: "center",
       headerAlign: "center",
     },
-    {
-      field: "page",
-      headerName: "Page",
-      width: 60,
-      sortable: false,
-      align: "center",
-      headerAlign: "center",
-    },
   ];
 
   if (userInfo && userInfo.isMentor) {

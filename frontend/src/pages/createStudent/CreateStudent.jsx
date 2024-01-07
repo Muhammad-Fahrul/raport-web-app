@@ -71,8 +71,6 @@ const CreateStudent = () => {
           <span>Al-Qur&#39;an</span>
           <input
             type="checkbox"
-            required="required"
-            checked={grade}
             onChange={() => {
               setGrade(!grade);
             }}
