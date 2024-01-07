@@ -2,7 +2,7 @@ import { useParams } from "react-router-dom";
 import { useCreateRaportMutation } from "../../slices/mentorApiSlice";
 import Loader from "../loader/Loader";
 import "./raportForm.css";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 
 const RaportForm = ({ setDisplay }) => {
   const { studentId } = useParams();
@@ -11,7 +11,7 @@ const RaportForm = ({ setDisplay }) => {
   const [verse, setVerse] = useState("");
   const [page, setPage] = useState("");
 
-  const [createRaport, { isLoading, isSuccess, isError, error }] =
+  const [createRaport, { isLoading, isError, error }] =
     useCreateRaportMutation();
 
   const handleSubmit = async (e) => {
@@ -24,16 +24,12 @@ const RaportForm = ({ setDisplay }) => {
         page,
         studentId,
       }).unwrap();
+      alert(`${res.title} berhasil ditambahkan`);
     } catch (err) {
       console.error(err?.data?.message || err.error);
     }
   };
 
-  useEffect(() => {
-    if (isSuccess) {
-      alert(`${title} berhasil ditambakan`);
-    }
-  }, [isSuccess, title]);
   return (
     <div className="student-new-container raport-form">
       <form className="student-new-card create-student" onSubmit={handleSubmit}>

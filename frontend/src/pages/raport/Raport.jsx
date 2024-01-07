@@ -4,13 +4,12 @@ import Loader from "../../components/loader/Loader.jsx";
 
 import "./raport.css";
 import { useSelector } from "react-redux";
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import RaportForm from "../../components/raportForm/RaportForm.jsx";
 import Error from "../../components/error/Error.jsx";
 import RaportComp from "../../components/raport/RaportComp.jsx";
 
 const Raport = () => {
-  const [studentRaport, setStudentRaport] = useState([]);
   const { studentId, studentName } = useParams();
   const [display, setDisplay] = useState(false);
   const {
@@ -23,11 +22,9 @@ const Raport = () => {
 
   const userInfo = useSelector((state) => state.auth.userInfo);
 
-  useEffect(() => {
-    if (isSuccess) {
-      setStudentRaport(raport);
-    }
-  }, [isSuccess, raport]);
+  if (isError) {
+    return <Error message={error.data?.message} />;
+  }
 
   return (
     <div className="students-container">
@@ -65,13 +62,14 @@ const Raport = () => {
 
         <div className="students-wrapper-items">
           {isSuccess &&
-            (studentRaport.length < 1 ? (
+            (raport.length < 1 ? (
               <h1>Belum ada pencapaian</h1>
             ) : (
-              <RaportComp raport={studentRaport} />
+              <RaportComp raport={raport} />
             ))}
         </div>
       </ul>
+
       {isLoading && <Loader />}
       {display && <RaportForm setDisplay={setDisplay} />}
     </div>
