@@ -118,6 +118,23 @@ const getStudentsByMentorId = asyncHandler(async (req, res) => {
         _id: 1,
         username: 1,
         raport: "$lastRaport",
+        total: {
+          $add: [
+            {
+              $cond: {
+                if: "$isQuran",
+                then: { $multiply: ["$lastRaport.chapter", 1000] },
+                else: { $multiply: ["$lastRaport.chapter", 100] },
+              },
+            },
+            "$lastRaport.verse",
+          ],
+        },
+      },
+    },
+    {
+      $sort: {
+        total: -1, // Menyortir secara descending berdasarkan total
       },
     },
   ]);

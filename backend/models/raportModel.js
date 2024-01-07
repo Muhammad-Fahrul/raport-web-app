@@ -10,10 +10,6 @@ const raportSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
-    page: {
-      type: Number,
-      required: true,
-    },
     verse: {
       type: Number,
       required: true,

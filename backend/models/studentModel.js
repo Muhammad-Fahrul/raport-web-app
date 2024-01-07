@@ -28,6 +28,10 @@ const studentSchema = mongoose.Schema(
       default: false,
       immutable: true,
     },
+    isQuran: {
+      type: Boolean,
+      required: true,
+    },
   },
   {
     timestamps: true,

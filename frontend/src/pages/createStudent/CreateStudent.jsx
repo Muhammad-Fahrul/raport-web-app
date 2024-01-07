@@ -7,6 +7,7 @@ const CreateStudent = () => {
   const [username, setUsername] = useState("");
   const [phoneNumber, setphoneNumber] = useState("");
   const [password, setPassword] = useState("");
+  const [grade, setGrade] = useState(false);
 
   const [createStudent, { isLoading }] = useCreateStudentMutation();
 
@@ -18,11 +19,13 @@ const CreateStudent = () => {
           username,
           phoneNumber,
           password,
+          isQuran: grade,
         }).unwrap();
-        alert(`${username} berhasil ditambahkan`);
+        alert(`${res.username} berhasil ditambahkan`);
         setUsername("");
         setphoneNumber("");
         setPassword("");
+        setGrade(false);
       } catch (err) {
         console.error(err?.data?.message || err.error);
         alert(`${username} gagal ditambahkan`);
@@ -34,6 +37,7 @@ const CreateStudent = () => {
     <div className="student-new-container">
       <form onSubmit={submitHandler} className="student-new-card">
         <a className="singup">New Student</a>
+
         <div className="inputBox">
           <input
             type="text"
@@ -61,6 +65,18 @@ const CreateStudent = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <span>Password</span>
+        </div>
+
+        <div className="input-grade">
+          <span>Al-Qur&#39;an</span>
+          <input
+            type="checkbox"
+            required="required"
+            checked={grade}
+            onChange={() => {
+              setGrade(!grade);
+            }}
+          />
         </div>
 
         <button className="enter">Enter</button>

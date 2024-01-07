@@ -95,6 +95,12 @@
   border-radius: 8px;
 }
 
+.input-grade {
+  display: flex;
+  gap: 1em;
+  justify-content: flex-start;
+}
+
 .enter {
   height: 45px;
   width: 100px;

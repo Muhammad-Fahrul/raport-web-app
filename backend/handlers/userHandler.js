@@ -94,7 +94,13 @@ const getTopStudents = asyncHandler(async (req, res) => {
         raport: "$lastRaport",
         total: {
           $add: [
-            { $multiply: ["$lastRaport.chapter", 1000] },
+            {
+              $cond: {
+                if: "$isQuran",
+                then: { $multiply: ["$lastRaport.chapter", 1000] },
+                else: { $multiply: ["$lastRaport.chapter", 100] },
+              },
+            },
             "$lastRaport.verse",
           ],
         },
