@@ -26,13 +26,13 @@ const RaportComp = ({ raport }) => {
     {
       field: "title",
       headerName: "Surah",
-      width: 100,
+      width: 130,
       sortable: false,
     },
     {
       field: "chapter",
       headerName: "Chapter",
-      width: 75,
+      width: 80,
       sortable: false,
       align: "center",
       headerAlign: "center",
@@ -40,7 +40,7 @@ const RaportComp = ({ raport }) => {
     {
       field: "verse",
       headerName: "Verse",
-      width: 60,
+      width: 70,
       sortable: false,
       align: "center",
       headerAlign: "center",

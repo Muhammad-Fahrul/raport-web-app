@@ -9,7 +9,6 @@ const RaportForm = ({ setDisplay }) => {
   const [title, setTitle] = useState("");
   const [chapter, setChapter] = useState("");
   const [verse, setVerse] = useState("");
-  const [page, setPage] = useState("");
 
   const [createRaport, { isLoading, isError, error }] =
     useCreateRaportMutation();
@@ -21,7 +20,6 @@ const RaportForm = ({ setDisplay }) => {
         title,
         chapter,
         verse,
-        page,
         studentId,
       }).unwrap();
       alert(`${res.title} berhasil ditambahkan`);
@@ -86,16 +84,6 @@ const RaportForm = ({ setDisplay }) => {
             onChange={(e) => setVerse(e.target.value)}
           />
           <span>Verse</span>
-        </div>
-
-        <div className="inputBox">
-          <input
-            type="number"
-            required="required"
-            min={0}
-            onChange={(e) => setPage(e.target.value)}
-          />
-          <span>Page</span>
         </div>
 
         <button className="enter">Add</button>
