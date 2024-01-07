@@ -3,13 +3,12 @@ import Mentor from "../models/mentorModel.js";
 import { generateToken } from "../utils/generateToken.js";
 import Student from "../models/studentModel.js";
 import Raport from "../models/raportModel.js";
-import mongoose from "mongoose";
 
 // @desc    Register user & get token
 // @route   POST /api/mentors
 // @access  Public
 const registerMentor = asyncHandler(async (req, res) => {
-  const { phoneNumber } = req.body;
+  const { username, phoneNumber, ...others } = req.body;
   const mentorExist = await Mentor.findOne({ phoneNumber });
 
   if (mentorExist) {
@@ -17,7 +16,13 @@ const registerMentor = asyncHandler(async (req, res) => {
     throw new Error("User already exist");
   }
 
-  const mentor = await Mentor.create({ ...req.body });
+  const usernameLowerCase = username.toLocaleLowerCase();
+
+  const mentor = await Mentor.create({
+    username: usernameLowerCase,
+    phoneNumber,
+    ...others,
+  });
 
   if (mentor) {
     generateToken(res, mentor._id, mentor.isMentor);
@@ -62,7 +67,7 @@ const updateMentorProfile = asyncHandler(async (req, res) => {
 // @route   POST /api/mentors/students
 // @access  Private (Mentor only)
 const createStudent = asyncHandler(async (req, res) => {
-  const { username } = req.body;
+  const { username, ...others } = req.body;
   const mentorId = req.user.userId;
 
   const studentExist = await Student.findOne({ username });
@@ -72,7 +77,13 @@ const createStudent = asyncHandler(async (req, res) => {
     throw new Error("Student already exist");
   }
 
-  const student = await Student.create({ ...req.body, mentorId });
+  const usernameModified = username.toLocaleLowerCase();
+
+  const student = await Student.create({
+    username: usernameModified,
+    ...others,
+    mentorId,
+  });
 
   res.status(201).json(student);
 });
@@ -126,8 +137,11 @@ const addRaport = asyncHandler(async (req, res) => {
     res.status(403);
     throw new Error("You are not allowed buddy");
   }
+
+  const titleLowerCase = title.toLocaleLowerCase();
+
   const newRaport = {
-    title: title,
+    title: titleLowerCase,
     chapter: +chapter,
     page: +page,
     verse: +verse,
