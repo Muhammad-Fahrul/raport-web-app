@@ -3,6 +3,7 @@ import "./students.css";
 import { useGetStudentsQuery } from "../../slices/mentorApiSlice.js";
 import Loader from "../../components/loader/Loader.jsx";
 import Error from "../../components/error/Error.jsx";
+import ButtonIcon from "../../components/button/ButtonIcon.jsx";
 
 const Students = () => {
   const {
@@ -18,64 +19,50 @@ const Students = () => {
   }
 
   return (
-    <div className="students-container">
-      <ul className="students-wrapper">
-        <h2>My students</h2>
-        <div className="students-wrapper-items">
-          {isSuccess &&
-            (myStudents.length < 1 ? (
-              <h1>belum ada siswa</h1>
-            ) : (
-              myStudents.map((student) => (
-                <Link
-                  key={student._id}
-                  to={`/me/students/raports/${student._id}/${student.username}`}
-                >
-                  <li className="cardCollection">
-                    <div className="cardCollectionimg"></div>
-                    <div className="cardCollectiontextBox">
-                      <p className="cardCollectionp">{student.username}</p>
-                      <div className="cardCollectiontextContent">
-                        {student.raport && (
-                          <>
-                            <p className="cardCollectionh">
-                              {student.raport.title}
-                            </p>
-                            <p className="cardCollectionh">
-                              {student.raport.verse}
-                            </p>
-                          </>
-                        )}
-                      </div>
-                      <div></div>
+    <div className="container-students">
+      <h1>My students</h1>
+      <ul className="container-card">
+        {isSuccess &&
+          (myStudents.length < 1 ? (
+            <h2>belum ada siswa</h2>
+          ) : (
+            myStudents.map((student) => (
+              <Link
+                key={student._id}
+                to={`/me/students/raports/${student._id}/${
+                  student.username.split(" ")[0]
+                }`}
+              >
+                <li className="wrapper-card">
+                  <div className="card-img"></div>
+                  <div className="card-text-box">
+                    <p className="card-title">{student.username}</p>
+                    <div className="card-text-content">
+                      {student.raport && (
+                        <>
+                          <p className="card-detail">{student.raport.title}</p>
+                          <p className="card-detail">{student.raport.verse}</p>
+                        </>
+                      )}
                     </div>
-                  </li>
-                </Link>
-              ))
-            ))}
-        </div>
+                  </div>
+                </li>
+              </Link>
+            ))
+          ))}
       </ul>
       <Link to="/me/students/new">
-        <button className="Btn new-students-btn">
-          <div className="sign">
-            <svg
-              className="w-6 h-6 text-gray-800 dark:text-white"
-              aria-hidden="true"
-              xmlns="http://www.w3.org/2000/svg"
-              fill="none"
-              viewBox="0 0 21 21"
-            >
-              <path
-                stroke="currentColor"
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M7.418 17.861 1 20l2.139-6.418m4.279 4.279 10.7-10.7a3.027 3.027 0 0 0-2.14-5.165c-.802 0-1.571.319-2.139.886l-10.7 10.7m4.279 4.279-4.279-4.279m2.139 2.14 7.844-7.844m-1.426-2.853 4.279 4.279"
-              />
-            </svg>
-          </div>
-          <div className="text">New</div>
-        </button>
+        <ButtonIcon text={"NEW"}>
+          <svg
+            className="w-6 h-6 text-gray-800 dark:text-white"
+            aria-hidden="true"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="currentColor"
+            viewBox="0 0 20 18"
+          >
+            <path d="M6.5 9a4.5 4.5 0 1 0 0-9 4.5 4.5 0 0 0 0 9Zm-1.391 7.361.707-3.535a3 3 0 0 1 .82-1.533L7.929 10H5a5.006 5.006 0 0 0-5 5v2a1 1 0 0 0 1 1h4.259a2.975 2.975 0 0 1-.15-1.639ZM8.05 17.95a1 1 0 0 1-.981-1.2l.708-3.536a1 1 0 0 1 .274-.511l6.363-6.364a3.007 3.007 0 0 1 4.243 0 3.007 3.007 0 0 1 0 4.243l-6.365 6.363a1 1 0 0 1-.511.274l-3.536.708a1.07 1.07 0 0 1-.195.023Z" />
+          </svg>
+        </ButtonIcon>
       </Link>
       {isLoading && <Loader />}
     </div>

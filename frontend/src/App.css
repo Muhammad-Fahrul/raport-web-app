@@ -5,8 +5,80 @@
   --bg-color: #fff;
   --bg-color-alt: #666;
   --main-color: #323232;
+  --black: #000000;
+  --ch-black: #141414;
+  --eer-black: #1b1b1b;
+  --night-rider: #2e2e2e;
+  --white: #ffffff;
+  --af-white: #f3f3f3;
+  --ch-white: #e1e1e1;
+  --primary-color: #645bff;
+  --secondary-color: #fff;
+  --hover-color: #111;
+  --arrow-width: 10px;
+  --arrow-stroke: 2px;
 }
 
 * {
   color: inherit;
+}
+
+.container-global {
+  position: relative;
+  padding: 1em;
+}
+
+/* card style;page: TopStudent, Student */
+
+.container-card {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5em;
+  text-transform: capitalize;
+}
+
+.wrapper-card {
+  width: 100%;
+  height: 80px;
+  background: #353535;
+  border-radius: 10px;
+  display: flex;
+  align-items: center;
+  justify-content: left;
+  transition: 0.5s ease-in-out;
+  color: #fff;
+}
+
+.card-img {
+  width: 50px;
+  height: 50px;
+  margin-left: 10px;
+  border-radius: 100px;
+  background: linear-gradient(#d7cfcf, #9198e5);
+}
+
+.card-text-box {
+  width: calc(100% - 90px);
+  margin-left: 10px;
+  font-family: "Poppins" sans-serif;
+}
+
+.card-text-content {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.span {
+  font-size: 10px;
+}
+
+.card-title {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.card-detail {
+  font-size: 18px;
+  font-weight: lighter;
 }

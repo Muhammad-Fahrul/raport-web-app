@@ -1,9 +1,7 @@
-.students-wrapper-items .cardCollectiontextBox p:nth-child(2) {
-  font-size: 1rem;
-  font-weight: 300;
+.container-top-students h1 {
+  margin-bottom: 1em;
 }
-
-.cardCollectionimg.rank {
+.card-img.rank {
   display: flex;
   justify-content: center;
   align-items: center;

@@ -1,12 +1,11 @@
 import { Link } from "react-router-dom";
-import "./notFound.css";
-export default function NotFound() {
+import "./button.css";
+const Button = ({ url, text }) => {
   return (
-    <div className="container-notfound">
-      <h3>Sorry, the page you were looking for was not found.</h3>
-      <Link to="/">
+    <div className="main-btn">
+      <Link to={url}>
         <button>
-          Home
+          {text}
           <div className="wrapper-arrow">
             <div className="arrow"></div>
           </div>
@@ -14,4 +13,6 @@ export default function NotFound() {
       </Link>
     </div>
   );
-}
+};
+
+export default Button;

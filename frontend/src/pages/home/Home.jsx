@@ -1,37 +1,45 @@
 import { Link } from "react-router-dom";
 import "./home.css";
 import { useSelector } from "react-redux";
+import Button from "../../components/button/Button";
 const Home = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
 
   return (
-    <div className="home-container">
-      <div className="home-wrapper">
-        <div className="home-item bottom">
+    <div className="container-home">
+      <div className="wrapper-home">
+        <div className="wrapper-home-item">
           {!userInfo ? (
             <>
-              <div className="home-item top">
+              <div>
                 <h1>Raport</h1>
                 <p>Easy way to to mark your student daily achievment</p>
-                <Link to="/login">
-                  <button className="flip-card__btn">Login</button>
-                </Link>
               </div>
+              <Button url="/login" text="Login" />
             </>
           ) : userInfo.isMentor ? (
-            <div className="second">
-              <h2>Welcome</h2>
-              <p>
-                Start your student marking <strong>Achievement</strong>
-              </p>
-              <Link to="/me/students">
-                <button className="flip-card__btn">Let&#39;s Go</button>
-              </Link>
-            </div>
+            <>
+              <div>
+                <h1>Welcome</h1>
+                <p>
+                  Start your <strong>Marking Student Achievement</strong>
+                </p>
+              </div>
+              <Button url={`/me/students`} text="Let's Go" />
+            </>
           ) : (
-            <h1>
-              Welcome, see how far your <strong>Achievement</strong> are
-            </h1>
+            <>
+              <div>
+                <h1>Welcome</h1>
+                <p>
+                  see how far your <strong>Achievement</strong> are
+                </p>
+              </div>
+              <Button
+                url={`/me/students/raports/${userInfo._id}/${userInfo.username}`}
+                text="Let's Go"
+              />
+            </>
           )}
         </div>
       </div>

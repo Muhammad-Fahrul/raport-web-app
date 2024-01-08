@@ -1,3 +1,11 @@
+.container-raport {
+  text-transform: capitalize;
+}
+
+.container-raport h1 {
+  margin-bottom: 1em;
+}
+
 .raport-del-btn {
   border: none;
   width: 18px;
@@ -5,5 +13,5 @@
 }
 
 .raport-del-btn svg {
-  fill: red;
+  fill: rgb(255, 52, 52);
 }

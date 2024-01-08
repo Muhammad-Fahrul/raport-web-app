@@ -3,9 +3,11 @@ import Navbar from "../components/navbar/Navbar";
 
 const MainLayout = () => {
   return (
-    <div style={{ paddingBottom: "1em" }}>
+    <div>
       <Navbar />
-      <Outlet />
+      <div className="container-global">
+        <Outlet />
+      </div>
     </div>
   );
 };
