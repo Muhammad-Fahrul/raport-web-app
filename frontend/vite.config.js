@@ -8,7 +8,7 @@ export default defineConfig({
     port: 3000,
     proxy: {
       "/api": {
-        target: "https://clean-cyan-tiara.cyclic.app",
+        target: "",
         changeOrigin: true,
       },
     },
