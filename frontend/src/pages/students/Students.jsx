@@ -29,9 +29,7 @@ const Students = () => {
             myStudents.map((student) => (
               <Link
                 key={student._id}
-                to={`/me/students/raports/${student._id}/${
-                  student.username.split(" ")[0]
-                }`}
+                to={`/me/students/raports/${student._id}/${student.username}`}
               >
                 <li className="wrapper-card">
                   <div className="card-img"></div>

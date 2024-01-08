@@ -169,7 +169,10 @@ const Profile = () => {
             (userInfo.isMentor ? (
               <Button url="/me/students" text="Students" />
             ) : (
-              <Button url="/me/students" text="Students" />
+              <Button
+                url={`/me/students/raports/${userId}/${userInfo.username}`}
+                text="Raport"
+              />
             ))}
         </div>
       </div>

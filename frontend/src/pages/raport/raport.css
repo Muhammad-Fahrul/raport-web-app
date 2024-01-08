@@ -2,7 +2,7 @@
   text-transform: capitalize;
 }
 
-.container-raport h1 {
+.container-raport .username {
   margin-bottom: 1em;
 }
 

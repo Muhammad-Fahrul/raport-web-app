@@ -45,7 +45,10 @@ const Raport = () => {
         </div>
       )}
       {!isError ? (
-        <h1>Achivement ({studentName})</h1>
+        <div className="username">
+          <h1>Achivement </h1>
+          <p>{studentName}</p>
+        </div>
       ) : (
         <h1>{error?.data?.message || "internal server error"}</h1>
       )}

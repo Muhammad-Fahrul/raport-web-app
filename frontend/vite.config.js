@@ -18,4 +18,4 @@ export default defineConfig({
   },
 });
 
-// https://clean-cyan-tiara.cyclic.app/
+// https://clean-cyan-tiara.cyclic.app
