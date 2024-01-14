@@ -95,7 +95,7 @@
   margin-bottom: 1em;
   display: flex;
   justify-content: space-between;
-  gap: 0.5em;
+  gap: 1em;
 }
 
 .toggle-students-opt > * {
@@ -104,8 +104,9 @@
 
 .toggle-students-opt button {
   width: 100%;
-  padding: 0.5em;
+  padding: 1em;
   border: 2px solid var(--ch-black);
+  border-radius: 10px;
 }
 
 .toggle-students-opt .active {

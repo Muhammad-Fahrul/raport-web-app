@@ -120,7 +120,7 @@ const getStudentsByMentorId = asyncHandler(async (req, res) => {
 // @access  Private (Mentor only)
 const addRaport = asyncHandler(async (req, res) => {
   const { userId } = req.user;
-  const { title, chapter, page, verse } = req.body;
+  const { title, chapter, page, verse, note } = req.body;
   const { studentId } = req.params;
   const student = await Student.findOne({ _id: studentId });
 
@@ -136,6 +136,7 @@ const addRaport = asyncHandler(async (req, res) => {
     chapter: +chapter,
     page: +page,
     verse: +verse,
+    note,
     studentId,
   };
 

@@ -26,6 +26,7 @@ const RaportForm = ({ lastRaport, setDisplay }) => {
         title,
         chapter,
         verse,
+        note,
         studentId,
       }).unwrap();
       alert(`${res.title} berhasil ditambahkan`);
