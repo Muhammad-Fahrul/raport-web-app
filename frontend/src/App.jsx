@@ -4,34 +4,34 @@ import {
   Route,
   RouterProvider,
 } from "react-router-dom";
-import Login from "./pages/login/Login";
-import Register from "./pages/register/Register";
 import "./App.css";
 import MainLayout from "./layout/MainLayout";
+import Login from "./pages/login/Login";
+import Register from "./pages/register/Register";
 import Home from "./pages/home/Home";
-import { Provider } from "react-redux";
-import store from "./store.js";
 import Profile from "./pages/profile/Profile.jsx";
 import CreateStudent from "./pages/createStudent/CreateStudent.jsx";
 import Students from "./pages/students/Students.jsx";
 import NotFound from "./pages/notFound/NotFound.jsx";
+
+import { Provider } from "react-redux";
+import store from "./store.js";
 import {
-  authLoader,
+  signLoader,
   mentorLoader,
   raportLoader,
   userLoader,
 } from "./pages/loader.js";
 import Raport from "./pages/raport/Raport.jsx";
 import TopStudents from "./pages/topStudents.jsx/TopStudents.jsx";
+import EditUser from "./pages/editUser/EditUser.jsx";
 
 const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       <Route index element={<Home />} />
-      <Route loader={authLoader}>
-        <Route path="login" element={<Login />} />
-        <Route path="register" element={<Register />} />
-      </Route>
+      <Route path="login" element={<Login />} loader={signLoader} />
+      <Route path="register" element={<Register />} />
       <Route loader={userLoader}>
         <Route loader={mentorLoader}>
           <Route path="me/students/new" element={<CreateStudent />} />
@@ -43,6 +43,7 @@ const router = createBrowserRouter(
           loader={raportLoader}
         />
         <Route path="me/:userId" element={<Profile />} />
+        <Route path="/me/update" element={<EditUser />} />
       </Route>
       <Route path="rank" element={<TopStudents />} />
       <Route path="*" element={<NotFound />} />

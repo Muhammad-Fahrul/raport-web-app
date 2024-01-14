@@ -14,14 +14,14 @@ const Login = () => {
   const [phoneNumberS, setphoneNumberS] = useState("");
   const [passwordS, setPasswordS] = useState("");
 
-  const handleToggleChange = () => {
-    setIsChecked(!isChecked);
-  };
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
   const [login, { isLoading, isError, error }] = useLoginMutation();
+
+  const handleToggleChange = () => {
+    setIsChecked(!isChecked);
+  };
 
   const handleSubmit = (e, type) => {
     e.preventDefault();
@@ -57,38 +57,24 @@ const Login = () => {
           <span className="slider"></span>
           <span className="card-side"></span>
           <div className={`flip-card__inner ${isChecked ? "flipped" : ""}`}>
-            <div className="flip-card__front">
-              <div className="title">
-                <p>As a Mentor</p>
-                {isError && (
-                  <p className="error-login-alert">
-                    {error?.data?.message || "Internal Server Error"}
-                  </p>
-                )}
-              </div>
-              <FormSign
-                type="mentor"
-                setPhoneNumber={setphoneNumberM}
-                setPassword={setPasswordM}
-                handleSubmit={handleSubmit}
-              />
-            </div>
-            <div className="flip-card__back">
-              <div className="title">
-                <p>As a Student</p>
-                {isError && (
-                  <p className="error-login-alert">
-                    {error?.data?.message || "Internal Server Error"}
-                  </p>
-                )}
-              </div>
-              <FormSign
-                type="student"
-                setPhoneNumber={setphoneNumberS}
-                setPassword={setPasswordS}
-                handleSubmit={handleSubmit}
-              />
-            </div>
+            <FormSign
+              title="As a Mentor"
+              type="mentor"
+              setPhoneNumber={setphoneNumberM}
+              setPassword={setPasswordM}
+              handleSubmit={handleSubmit}
+              isError={isError}
+              error={error}
+            />
+            <FormSign
+              title="As a Student"
+              type="student"
+              setPhoneNumber={setphoneNumberS}
+              setPassword={setPasswordS}
+              handleSubmit={handleSubmit}
+              isError={isError}
+              error={error}
+            />
           </div>
         </label>
       </div>

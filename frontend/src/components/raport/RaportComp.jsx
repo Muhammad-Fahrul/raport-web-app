@@ -2,26 +2,10 @@ import { DataGrid } from "@mui/x-data-grid";
 import { useSelector } from "react-redux";
 import { useDelRaportMutation } from "../../slices/mentorApiSlice";
 import Loader from "../loader/Loader";
+
 const RaportComp = ({ raport }) => {
   const userInfo = useSelector((state) => state.auth.userInfo);
 
-  const [delRaport, { isLoading }] = useDelRaportMutation();
-
-  const handleDelete = (e, id) => {
-    e.preventDefault();
-    const del = async () => {
-      if (confirm("anda yakin ingin menghapusnya?")) {
-        try {
-          await delRaport({ id });
-          alert(`${id} berhasil dihapus`);
-        } catch (err) {
-          console.error(err);
-          alert(`${id} gagal dihapus`);
-        }
-      }
-    };
-    del();
-  };
   const columns = [
     {
       field: "title",
@@ -44,6 +28,22 @@ const RaportComp = ({ raport }) => {
       sortable: false,
       align: "center",
       headerAlign: "center",
+    },
+    {
+      field: "note",
+      headerName: "Note",
+      width: 100,
+      sortable: false,
+      renderCell: (params) => {
+        return (
+          <div
+            style={{ cursor: "pointer" }}
+            onClick={() => alert(params.row.note)}
+          >
+            {params.row.note}
+          </div>
+        );
+      },
     },
   ];
 
@@ -78,17 +78,37 @@ const RaportComp = ({ raport }) => {
       },
     });
   }
+
+  const [delRaport, { isLoading }] = useDelRaportMutation();
+
+  const handleDelete = (e, id) => {
+    e.preventDefault();
+    const del = async () => {
+      if (confirm("anda yakin ingin menghapusnya?")) {
+        try {
+          await delRaport({ id });
+          alert(`${id} berhasil dihapus`);
+        } catch (err) {
+          console.error(err);
+          alert(`${id} gagal dihapus`);
+        }
+      }
+    };
+    del();
+  };
+
+  if (isLoading) {
+    return <Loader />;
+  }
+
   return (
-    <>
-      <DataGrid
-        rows={raport}
-        disableRowSelectionOnClick
-        getRowId={(row) => row._id}
-        columns={columns}
-        disableColumnMenu
-      />
-      {isLoading && <Loader />}
-    </>
+    <DataGrid
+      rows={raport}
+      disableRowSelectionOnClick
+      getRowId={(row) => row._id}
+      columns={columns}
+      disableColumnMenu
+    />
   );
 };
 

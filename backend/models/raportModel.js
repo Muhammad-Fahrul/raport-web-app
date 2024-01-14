@@ -14,6 +14,10 @@ const raportSchema = mongoose.Schema(
       type: Number,
       required: true,
     },
+    note: {
+      type: String,
+      default: "tidak ada catatan",
+    },
     studentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",

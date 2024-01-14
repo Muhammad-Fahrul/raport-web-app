@@ -4,6 +4,7 @@ import {
   getRaport,
   getTopStudents,
   logoutUser,
+  updateProfile,
 } from "../handlers/userHandler.js";
 import { registerMentor } from "../handlers/mentorHandler.js";
 import { mentorStudentProtect } from "../middleware/authMiddleware.js";
@@ -14,5 +15,6 @@ router.post("/auth", authUser);
 router.post("/logout", logoutUser);
 router.get("/raports/:studentId", mentorStudentProtect, getRaport);
 router.get("/rank", getTopStudents);
+router.put("/profile", mentorStudentProtect, updateProfile);
 
 export default router;

@@ -2,13 +2,19 @@ import { useParams } from "react-router-dom";
 import { useCreateRaportMutation } from "../../slices/mentorApiSlice";
 import Loader from "../loader/Loader";
 import "./raportForm.css";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 
-const RaportForm = ({ setDisplay }) => {
+const RaportForm = ({ lastRaport, setDisplay }) => {
   const { studentId } = useParams();
   const [title, setTitle] = useState("");
   const [chapter, setChapter] = useState("");
   const [verse, setVerse] = useState("");
+  const [note, setNote] = useState("");
+
+  useEffect(() => {
+    setTitle(lastRaport.title);
+    setChapter(lastRaport.chapter);
+  }, [lastRaport.title, lastRaport.chapter]);
 
   const [createRaport, { isLoading, isError, error }] =
     useCreateRaportMutation();
@@ -62,6 +68,7 @@ const RaportForm = ({ setDisplay }) => {
           <input
             type="text"
             required="required"
+            value={title}
             onChange={(e) => setTitle(e.target.value)}
           />
           <span>Surah</span>
@@ -71,6 +78,7 @@ const RaportForm = ({ setDisplay }) => {
             type="number"
             required="required"
             min={0}
+            value={chapter}
             onChange={(e) => setChapter(e.target.value)}
           />
           <span>Chapter</span>
@@ -84,6 +92,16 @@ const RaportForm = ({ setDisplay }) => {
             onChange={(e) => setVerse(e.target.value)}
           />
           <span>Verse</span>
+        </div>
+
+        <div className="inputBox">
+          <input
+            type="text"
+            required="required"
+            min={0}
+            onChange={(e) => setNote(e.target.value)}
+          />
+          <span>Note</span>
         </div>
 
         <button className="enter">Add</button>

@@ -26,25 +26,9 @@ const authUser = asyncHandler(async (req, res) => {
   if (user && (await user.matchPassword(password))) {
     generateToken(res, user._id, user.isMentor);
 
-    let responseJson;
-    if (user.isMentor) {
-      responseJson = {
-        _id: user._id,
-        username: user.username,
-        phoneNumber: user.phoneNumber,
-        isMentor: user.isMentor,
-      };
-    } else {
-      responseJson = {
-        _id: user._id,
-        username: user.username,
-        phoneNumber: user.phoneNumber,
-        isMentor: user.isMentor,
-        isQuran: user.isQuran,
-      };
-    }
+    const resJson = user.sanitize();
 
-    res.json(responseJson);
+    res.json(resJson);
   } else {
     res.status(401);
     throw new Error("Invalid email or password");
@@ -66,6 +50,49 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "All cookies deleted successfully" });
 };
 
+// @desc    Update Mentor
+// @route   PUT /api/mentors
+// @access  Private
+const updateProfile = asyncHandler(async (req, res) => {
+  const { userId } = req.user; // Ambil ID Mentor dari parameter request
+  const { password, fullname, nickname, ...others } = req.body;
+
+  const updateFields = {
+    ...others,
+    fullname: fullname?.toLocaleLowerCase(),
+    nickname: nickname?.toLocaleLowerCase(),
+  };
+
+  if (req.body.password) {
+    updateFields.password = req.body.password;
+  }
+
+  let user;
+
+  if (req.user.isMentor) {
+    user = await Mentor.findOneAndUpdate(
+      { _id: userId },
+      { $set: updateFields },
+      { new: true }
+    );
+  } else {
+    user = await Student.findOneAndUpdate(
+      { _id: userId },
+      { $set: updateFields },
+      { new: true }
+    );
+  }
+
+  if (user) {
+    // Dokumen berhasil diupdate
+    res.status(200).json(user.sanitize());
+  } else {
+    // Tidak ada dokumen yang diupdate
+    res.status(404);
+    throw new Error("User not Found");
+  }
+});
+
 const getRaport = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const studentId = req.params.studentId;
@@ -77,9 +104,9 @@ const getRaport = asyncHandler(async (req, res) => {
     throw new Error("You are not allowed");
   }
 
-  const students = await Raport.find({ studentId });
+  const raport = await Raport.find({ studentId });
 
-  res.status(200).json(students);
+  res.status(200).json(raport);
 });
 
 const getTopStudents = asyncHandler(async (req, res) => {
@@ -101,6 +128,8 @@ const getTopStudents = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         username: 1,
+        fullname: 1,
+        isQuran: 1,
         raport: "$lastRaport",
         total: {
           $add: [
@@ -126,4 +155,4 @@ const getTopStudents = asyncHandler(async (req, res) => {
   res.status(200).json(topStudents);
 });
 
-export { authUser, logoutUser, getRaport, getTopStudents };
+export { authUser, logoutUser, updateProfile, getRaport, getTopStudents };

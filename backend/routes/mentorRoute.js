@@ -1,6 +1,5 @@
 import express from "express";
 import {
-  updateMentorProfile,
   createStudent,
   getStudentsByMentorId,
   addRaport,
@@ -9,7 +8,6 @@ import {
 import { mentorProtect } from "../middleware/authMiddleware.js";
 const router = express.Router();
 
-router.route("/profile").put(mentorProtect, updateMentorProfile);
 router
   .route("/students")
   .post(mentorProtect, createStudent)

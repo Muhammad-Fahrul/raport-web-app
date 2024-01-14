@@ -8,6 +8,12 @@ const studentSchema = mongoose.Schema(
       required: true,
       unique: true,
     },
+    nickname: {
+      type: String,
+    },
+    fullname: {
+      type: String,
+    },
     phoneNumber: {
       type: String,
     },
@@ -31,12 +37,18 @@ const studentSchema = mongoose.Schema(
     isQuran: {
       type: Boolean,
       required: true,
+      immutable: true,
     },
   },
   {
     timestamps: true,
   }
 );
+
+studentSchema.methods.sanitize = function () {
+  const { password, ...others } = this._doc;
+  return { ...others };
+};
 
 // Match user entered password to hashed password in database
 studentSchema.methods.matchPassword = async function (enteredPassword) {

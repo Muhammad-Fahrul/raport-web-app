@@ -1,53 +1,32 @@
-import { Link } from "react-router-dom";
+import { useState } from "react";
 import "./students.css";
-import { useGetStudentsQuery } from "../../slices/mentorApiSlice.js";
-import Loader from "../../components/loader/Loader.jsx";
-import Error from "../../components/error/Error.jsx";
 import ButtonIcon from "../../components/button/ButtonIcon.jsx";
+import QuranStudents from "./components/QuranStudents.jsx";
+import IqroStudents from "./components/IqroStudents.jsx";
+import { Link } from "react-router-dom";
 
 const Students = () => {
-  const {
-    data: myStudents,
-    isSuccess,
-    isLoading,
-    isError,
-    error,
-  } = useGetStudentsQuery();
-
-  if (isError) {
-    return <Error message={error.data?.message} />;
-  }
+  const [display, setDisplay] = useState(true);
 
   return (
     <div className="container-students">
       <h1>My students</h1>
+      <div className="toggle-students-opt">
+        <button
+          className={display ? "active" : ""}
+          onClick={() => setDisplay(true)}
+        >
+          Al-Quran
+        </button>
+        <button
+          className={display ? "" : "active"}
+          onClick={() => setDisplay(false)}
+        >
+          IQRO
+        </button>
+      </div>
       <ul className="container-card">
-        {isSuccess &&
-          (myStudents.length < 1 ? (
-            <h2>belum ada siswa</h2>
-          ) : (
-            myStudents.map((student) => (
-              <Link
-                key={student._id}
-                to={`/me/students/raports/${student._id}/${student.username}`}
-              >
-                <li className="wrapper-card">
-                  <div className="card-img"></div>
-                  <div className="card-text-box">
-                    <p className="card-title">{student.username}</p>
-                    <div className="card-text-content">
-                      {student.raport && (
-                        <>
-                          <p className="card-detail">{student.raport.title}</p>
-                          <p className="card-detail">{student.raport.verse}</p>
-                        </>
-                      )}
-                    </div>
-                  </div>
-                </li>
-              </Link>
-            ))
-          ))}
+        {display ? <QuranStudents /> : <IqroStudents />}
       </ul>
       <Link to="/me/students/new">
         <ButtonIcon text={"NEW"}>
@@ -62,7 +41,6 @@ const Students = () => {
           </svg>
         </ButtonIcon>
       </Link>
-      {isLoading && <Loader />}
     </div>
   );
 };

@@ -6,11 +6,17 @@ const mentorSchema = mongoose.Schema(
     username: {
       type: String,
       required: true,
+      unique: true,
+    },
+    nickname: {
+      type: String,
+    },
+    fullname: {
+      type: String,
     },
     phoneNumber: {
       type: String,
       required: true,
-      unique: true,
     },
     password: {
       type: String,
@@ -30,7 +36,7 @@ const mentorSchema = mongoose.Schema(
   }
 );
 
-mentorSchema.methods.sanitizeMentor = function () {
+mentorSchema.methods.sanitize = function () {
   const { password, ...others } = this._doc;
   return { ...others };
 };

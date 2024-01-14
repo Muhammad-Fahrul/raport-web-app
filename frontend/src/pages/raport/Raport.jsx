@@ -1,35 +1,38 @@
-import { useParams } from "react-router-dom";
-import { useGetRaportQuery } from "../../slices/usersApiSlice.js";
-import Loader from "../../components/loader/Loader.jsx";
-
 import "./raport.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
 import RaportForm from "../../components/raportForm/RaportForm.jsx";
-import Error from "../../components/error/Error.jsx";
 import RaportComp from "../../components/raport/RaportComp.jsx";
 import ButtonIcon from "../../components/button/ButtonIcon.jsx";
+import { useGetRaportQuery } from "../../slices/usersApiSlice.js";
+import Loader from "../../components/loader/Loader.jsx";
+import { useParams } from "react-router-dom";
+import Error from "../../components/error/Error.jsx";
 
 const Raport = () => {
   const { studentId, studentName } = useParams();
+
   const [display, setDisplay] = useState(false);
-  const {
-    data: raport,
-    isSuccess,
-    isLoading,
-    isError,
-    error,
-  } = useGetRaportQuery(studentId);
 
-  const userInfo = useSelector((state) => state.auth.userInfo);
+  const { userInfo } = useSelector((state) => state.auth);
 
-  if (isError) {
+  const { data, isSuccess, isLoading, isError, error } =
+    useGetRaportQuery(studentId);
+
+  let raport;
+
+  if (isLoading) {
+    return <Loader />;
+  } else if (isSuccess) {
+    console.log(data);
+    raport = data;
+  } else if (isError) {
     return <Error message={error.data?.message} />;
   }
 
   return (
     <div className="container-raport">
-      {userInfo && userInfo.isMentor && !isError && (
+      {userInfo && userInfo.isMentor && (
         <div onClick={() => setDisplay(!display)}>
           <ButtonIcon text={"NEW"}>
             <svg
@@ -44,27 +47,19 @@ const Raport = () => {
           </ButtonIcon>
         </div>
       )}
-      {!isError ? (
+      <ul className="students-wrapper">
         <div className="username">
-          <h1>Achivement </h1>
+          <h1>Achivements </h1>
           <p>{studentName}</p>
         </div>
-      ) : (
-        <h1>{error?.data?.message || "internal server error"}</h1>
-      )}
-      <ul className="students-wrapper">
-        <div className="students-wrapper-items">
-          {isSuccess &&
-            (raport.length < 1 ? (
-              <h1>Belum ada pencapaian</h1>
-            ) : (
-              <RaportComp raport={raport} />
-            ))}
-        </div>
+        {<RaportComp raport={raport} />}
       </ul>
-
-      {isLoading && <Loader />}
-      {display && <RaportForm setDisplay={setDisplay} />}
+      {display && (
+        <RaportForm
+          lastRaport={raport[raport.length - 1] || { titel: "", chapter: "" }}
+          setDisplay={setDisplay}
+        />
+      )}
     </div>
   );
 };

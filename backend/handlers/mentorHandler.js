@@ -27,39 +27,11 @@ const registerMentor = asyncHandler(async (req, res) => {
   if (mentor) {
     generateToken(res, mentor._id, mentor.isMentor);
 
-    const newMentor = mentor.sanitizeMentor();
+    const newMentor = mentor.sanitize();
     res.status(201).json(newMentor);
   } else {
     res.status(400);
     throw new Error("Invalid user data");
-  }
-});
-
-// @desc    Update Mentor
-// @route   PUT /api/mentors
-// @access  Private
-const updateMentorProfile = asyncHandler(async (req, res) => {
-  const mentorId = req.mentor._id; // Ambil ID Mentor dari parameter request
-  const { password, ...others } = req.body;
-  const updateFields = { ...others };
-
-  if (req.body.password) {
-    updateFields.password = req.body.password;
-  }
-
-  const updatedMentor = await Mentor.findOneAndUpdate(
-    { _id: mentorId },
-    { $set: updateFields },
-    { new: true }
-  );
-
-  if (updatedMentor) {
-    // Dokumen berhasil diupdate
-    res.status(200).json(updatedMentor);
-  } else {
-    // Tidak ada dokumen yang diupdate
-    res.status(404);
-    throw new Error("Mentor not Found");
   }
 });
 
@@ -117,6 +89,8 @@ const getStudentsByMentorId = asyncHandler(async (req, res) => {
       $project: {
         _id: 1,
         username: 1,
+        nickname: 1,
+        isQuran: 1,
         raport: "$lastRaport",
         total: {
           $add: [
@@ -183,7 +157,6 @@ const deleteRaportById = asyncHandler(async (req, res) => {
 
 export {
   registerMentor,
-  updateMentorProfile,
   createStudent,
   getStudentsByMentorId,
   addRaport,
