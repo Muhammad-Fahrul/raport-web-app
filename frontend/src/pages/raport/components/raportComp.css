@@ -1,0 +1,10 @@
+.raport-status {
+  display: block;
+  width: 20px;
+}
+
+.button-note {
+  display: flex;
+  align-items: center;
+  height: 100%;
+}

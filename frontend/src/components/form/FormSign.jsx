@@ -3,7 +3,7 @@ import "./formSign.css";
 const FormSign = ({
   title,
   type,
-  setPhoneNumber,
+  setUsername,
   setPassword,
   handleSubmit,
   isError,
@@ -25,9 +25,9 @@ const FormSign = ({
         <input
           className="flip-card__input"
           name="phoneNumber"
-          placeholder="Number"
-          type="phoneNumber"
-          onChange={(e) => setPhoneNumber(e.target.value)}
+          placeholder="Username"
+          type="text"
+          onChange={(e) => setUsername(e.target.value)}
         />
         <input
           className="flip-card__input"

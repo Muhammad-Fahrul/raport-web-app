@@ -1,8 +1,8 @@
 import "./raport.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
-import RaportForm from "../../components/raportForm/RaportForm.jsx";
-import RaportComp from "../../components/raport/RaportComp.jsx";
+import CreateRaport from "./components/CreateRaport.jsx";
+import RaportComp from "./components/RaportComp.jsx";
 import ButtonIcon from "../../components/button/ButtonIcon.jsx";
 import { useGetRaportQuery } from "../../slices/usersApiSlice.js";
 import Loader from "../../components/loader/Loader.jsx";
@@ -24,7 +24,6 @@ const Raport = () => {
   if (isLoading) {
     return <Loader />;
   } else if (isSuccess) {
-    console.log(data);
     raport = data;
   } else if (isError) {
     return <Error message={error.data?.message} />;
@@ -55,8 +54,12 @@ const Raport = () => {
         {<RaportComp raport={raport} />}
       </ul>
       {display && (
-        <RaportForm
-          lastRaport={raport[raport.length - 1] || { titel: "", chapter: "" }}
+        <CreateRaport
+          lastRaport={
+            raport.length >= 1
+              ? raport[raport.length - 1]
+              : { titel: "", chapter: "" }
+          }
           setDisplay={setDisplay}
         />
       )}

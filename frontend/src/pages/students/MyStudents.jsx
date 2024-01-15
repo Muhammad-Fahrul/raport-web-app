@@ -1,12 +1,36 @@
 import { useState } from "react";
 import "./students.css";
 import ButtonIcon from "../../components/button/ButtonIcon.jsx";
-import QuranStudents from "./components/QuranStudents.jsx";
-import IqroStudents from "./components/IqroStudents.jsx";
+import Students from "./components/Students.jsx";
 import { Link } from "react-router-dom";
+import Loader from "../../components/loader/Loader.jsx";
+import Error from "../../components/error/Error.jsx";
+import { useGetStudentsQuery } from "../../slices/mentorApiSlice.js";
 
-const Students = () => {
+const MyStudents = () => {
   const [display, setDisplay] = useState(true);
+
+  const {
+    data: students,
+    isSuccess,
+    isLoading,
+    isError,
+    error,
+  } = useGetStudentsQuery();
+
+  let displayedStudents;
+
+  if (isLoading) {
+    return <Loader />;
+  } else if (isSuccess) {
+    if (display) {
+      displayedStudents = students.filter((student) => student.isQuran);
+    } else {
+      displayedStudents = students.filter((student) => !student.isQuran);
+    }
+  } else if (isError) {
+    return <Error message={error.data?.message} />;
+  }
 
   return (
     <div className="container-students">
@@ -26,7 +50,7 @@ const Students = () => {
         </button>
       </div>
       <ul className="container-card">
-        {display ? <QuranStudents /> : <IqroStudents />}
+        <Students students={displayedStudents} />
       </ul>
       <Link to="/me/students/new">
         <ButtonIcon text={"NEW"}>
@@ -45,4 +69,4 @@ const Students = () => {
   );
 };
 
-export default Students;
+export default MyStudents;

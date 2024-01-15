@@ -11,7 +11,7 @@ import Register from "./pages/register/Register";
 import Home from "./pages/home/Home";
 import Profile from "./pages/profile/Profile.jsx";
 import CreateStudent from "./pages/createStudent/CreateStudent.jsx";
-import Students from "./pages/students/Students.jsx";
+import MyStudents from "./pages/students/MyStudents.jsx";
 import NotFound from "./pages/notFound/NotFound.jsx";
 
 import { Provider } from "react-redux";
@@ -35,7 +35,7 @@ const router = createBrowserRouter(
       <Route loader={userLoader}>
         <Route loader={mentorLoader}>
           <Route path="me/students/new" element={<CreateStudent />} />
-          <Route path="me/students" element={<Students />} />
+          <Route path="me/students" element={<MyStudents />} />
         </Route>
         <Route
           path="me/students/raports/:studentId/:studentName"

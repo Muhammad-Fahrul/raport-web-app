@@ -1,15 +1,16 @@
 import { useParams } from "react-router-dom";
-import { useCreateRaportMutation } from "../../slices/mentorApiSlice";
-import Loader from "../loader/Loader";
-import "./raportForm.css";
+import { useCreateRaportMutation } from "../../../slices/mentorApiSlice";
+import Loader from "../../../components/loader/Loader";
+import "./createRaport.css";
 import { useState, useEffect } from "react";
 
-const RaportForm = ({ lastRaport, setDisplay }) => {
+const CreateRaport = ({ lastRaport, setDisplay }) => {
   const { studentId } = useParams();
   const [title, setTitle] = useState("");
   const [chapter, setChapter] = useState("");
   const [verse, setVerse] = useState("");
   const [note, setNote] = useState("");
+  const [status, setStatus] = useState(true);
 
   useEffect(() => {
     setTitle(lastRaport.title);
@@ -27,6 +28,7 @@ const RaportForm = ({ lastRaport, setDisplay }) => {
         chapter,
         verse,
         note,
+        status,
         studentId,
       }).unwrap();
       alert(`${res.title} berhasil ditambahkan`);
@@ -37,7 +39,7 @@ const RaportForm = ({ lastRaport, setDisplay }) => {
 
   return (
     <div className="student-new-container raport-form">
-      <form className="student-new-card create-student" onSubmit={handleSubmit}>
+      <form className="student-new-card create-raport" onSubmit={handleSubmit}>
         <span
           className="close-create-students"
           onClick={() => setDisplay(false)}
@@ -90,6 +92,7 @@ const RaportForm = ({ lastRaport, setDisplay }) => {
             type="number"
             required="required"
             min={0}
+            value={verse}
             onChange={(e) => setVerse(e.target.value)}
           />
           <span>Verse</span>
@@ -99,10 +102,22 @@ const RaportForm = ({ lastRaport, setDisplay }) => {
           <input
             type="text"
             required="required"
-            min={0}
+            value={note}
             onChange={(e) => setNote(e.target.value)}
           />
           <span>Note</span>
+        </div>
+
+        <div className="input-grade">
+          <label htmlFor="status">Mengulang?</label>
+          <input
+            id="status"
+            type="checkbox"
+            checked={!status}
+            onChange={() => {
+              setStatus(!status);
+            }}
+          />
         </div>
 
         <button className="enter">Add</button>
@@ -112,4 +127,4 @@ const RaportForm = ({ lastRaport, setDisplay }) => {
   );
 };
 
-export default RaportForm;
+export default CreateRaport;

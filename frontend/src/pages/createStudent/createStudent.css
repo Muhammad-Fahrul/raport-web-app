@@ -20,13 +20,14 @@
   align-items: center;
   max-width: 350px;
   flex-direction: column;
-  gap: 35px;
   border-radius: 15px;
-  /* box-shadow: 16px 16px 32px #c8c8c8, -16px -16px 32px #fefefe; */
   border-radius: 8px;
   padding: 1em;
 }
 
+.student-new-card.create-student {
+  gap: 1em;
+}
 .inputBox,
 .inputBox1 {
   position: relative;
@@ -42,6 +43,8 @@
   color: #000;
   font-size: 1em;
   background: transparent;
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
   border-left: 2px solid #000;
   border-bottom: 2px solid #000;
   transition: 0.1s;
@@ -98,11 +101,11 @@
 .input-grade {
   display: flex;
   gap: 1em;
-  justify-content: flex-start;
+  margin-bottom: 0.5em;
 }
 
 .enter {
-  height: 45px;
+  height: 40px;
   width: 100px;
   border-radius: 5px;
   border: 2px solid #000;

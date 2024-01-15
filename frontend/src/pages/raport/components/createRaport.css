@@ -4,19 +4,17 @@
   background-color: rgba(0, 0, 0, 0.651);
 }
 
-.student-new-container.raport-form .student-new-card {
+.student-new-container.raport-form .create-raport {
   justify-content: flex-start;
-  gap: 0.2em;
-  max-width: 200px;
   background-color: #fff;
 }
 
-.student-new-container.raport-form .student-new-card .inputBox {
+.student-new-container.raport-form .create-raport .inputBox {
   width: 80%;
-  height: 60px;
+  margin-bottom: 0.7em;
 }
 
-.student-new-container.raport-form .student-new-card.create-student {
+.student-new-container.raport-form .create-raport {
   position: relative;
 }
 

@@ -35,7 +35,10 @@ const CreateStudent = () => {
   };
   return (
     <div className="student-new-container">
-      <form onSubmit={submitHandler} className="student-new-card">
+      <form
+        onSubmit={submitHandler}
+        className="student-new-card create-student"
+      >
         <a className="singup">New Student</a>
 
         <div className="inputBox">
@@ -59,7 +62,7 @@ const CreateStudent = () => {
 
         <div className="inputBox">
           <input
-            type="password"
+            type="text"
             required="required"
             value={password}
             onChange={(e) => setPassword(e.target.value)}
@@ -68,8 +71,9 @@ const CreateStudent = () => {
         </div>
 
         <div className="input-grade">
-          <span>Al-Qur&#39;an</span>
+          <label htmlFor="grade">Al-Qur&#39;an</label>
           <input
+            id="grade"
             type="checkbox"
             onChange={() => {
               setGrade(!grade);

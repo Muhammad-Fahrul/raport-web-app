@@ -8,14 +8,14 @@ import Raport from "../models/raportModel.js";
 // @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
-  const { phoneNumber, password, isMentor } = req.body;
+  const { username, password, isMentor } = req.body;
 
   let user;
 
   if (isMentor) {
-    user = await Mentor.findOne({ phoneNumber });
+    user = await Mentor.findOne({ username });
   } else {
-    user = await Student.findOne({ phoneNumber });
+    user = await Student.findOne({ username });
   }
 
   if (!user) {

@@ -18,6 +18,11 @@ const raportSchema = mongoose.Schema(
       type: String,
       default: "tidak ada catatan",
     },
+    status: {
+      type: Boolean,
+      required: true,
+      default: true,
+    },
     studentId: {
       type: mongoose.Schema.Types.ObjectId,
       ref: "Student",

@@ -9,9 +9,9 @@ import FormSign from "../../components/form/FormSign.jsx";
 
 const Login = () => {
   const [isChecked, setIsChecked] = useState(false);
-  const [phoneNumberM, setphoneNumberM] = useState("");
+  const [usernameM, setUsernameM] = useState("");
   const [passwordM, setPasswordM] = useState("");
-  const [phoneNumberS, setphoneNumberS] = useState("");
+  const [usernameS, setUsernameS] = useState("");
   const [passwordS, setPasswordS] = useState("");
 
   const dispatch = useDispatch();
@@ -25,13 +25,13 @@ const Login = () => {
 
   const handleSubmit = (e, type) => {
     e.preventDefault();
-    const phoneNumber = type === "mentor" ? phoneNumberM : phoneNumberS;
+    const username = type === "mentor" ? usernameM : usernameS;
     const password = type === "mentor" ? passwordM : passwordS;
     const isMentor = type === "mentor";
     const getCred = async () => {
       try {
         const res = await login({
-          phoneNumber,
+          username,
           password,
           isMentor,
         }).unwrap();
@@ -60,7 +60,7 @@ const Login = () => {
             <FormSign
               title="As a Mentor"
               type="mentor"
-              setPhoneNumber={setphoneNumberM}
+              setUsername={setUsernameM}
               setPassword={setPasswordM}
               handleSubmit={handleSubmit}
               isError={isError}
@@ -69,7 +69,7 @@ const Login = () => {
             <FormSign
               title="As a Student"
               type="student"
-              setPhoneNumber={setphoneNumberS}
+              setUsername={setUsernameS}
               setPassword={setPasswordS}
               handleSubmit={handleSubmit}
               isError={isError}
