@@ -9,7 +9,7 @@ import { useNavigate } from "react-router-dom";
 const EditUser = () => {
   const [fullname, setFullname] = useState("");
   const [nickname, setNickname] = useState("");
-  const [number, setNumber] = useState("");
+  const [phoneNumber, setPhoneNumber] = useState("");
   const [password, setPassword] = useState("");
   const [conPassword, setConPassword] = useState("");
 
@@ -22,20 +22,20 @@ const EditUser = () => {
   useEffect(() => {
     setFullname(userInfo.fullname || "");
     setNickname(userInfo.nickname || "");
-    setNumber(userInfo.phoneNumber || "");
+    setPhoneNumber(userInfo.phoneNumber || "");
   }, [userInfo.nickname, userInfo.phoneNumber, userInfo.fullname]);
 
   const submitHandler = async (e) => {
     e.preventDefault();
     if (password !== conPassword) {
-      alert("Passwords do not match");
+      alert("Passwords does not match");
     } else {
       try {
         const res = await updateUser({
           _id: userInfo._id,
           fullname,
           nickname,
-          number,
+          phoneNumber,
           password,
         }).unwrap();
         dispacth(setCredentials(res));
@@ -75,23 +75,21 @@ const EditUser = () => {
         </label>
       </div>
 
-      {!userInfo?.isMentor && (
-        <label>
-          <input
-            placeholder=""
-            type="number"
-            className="input"
-            value={number}
-            onChange={(e) => setNumber(e.target.value)}
-          />
-          <span>Number</span>
-        </label>
-      )}
+      <label>
+        <input
+          placeholder=""
+          type="number"
+          className="input"
+          value={phoneNumber}
+          onChange={(e) => setPhoneNumber(e.target.value)}
+        />
+        <span>Phone Number</span>
+      </label>
 
       <label>
         <input
           placeholder=""
-          type="password"
+          type="text"
           className="input"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -102,7 +100,7 @@ const EditUser = () => {
       <label>
         <input
           placeholder=""
-          type="password"
+          type="text"
           className="input"
           value={conPassword}
           onChange={(e) => setConPassword(e.target.value)}

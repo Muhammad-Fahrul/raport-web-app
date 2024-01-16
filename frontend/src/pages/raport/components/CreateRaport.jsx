@@ -15,7 +15,7 @@ const CreateRaport = ({ lastRaport, setDisplay }) => {
   useEffect(() => {
     setTitle(lastRaport.title);
     setChapter(lastRaport.chapter);
-  }, [lastRaport.title, lastRaport.chapter]);
+  }, [lastRaport, lastRaport.title, lastRaport.chapter]);
 
   const [createRaport, { isLoading, isError, error }] =
     useCreateRaportMutation();
@@ -32,6 +32,7 @@ const CreateRaport = ({ lastRaport, setDisplay }) => {
         studentId,
       }).unwrap();
       alert(`${res.title} berhasil ditambahkan`);
+      setDisplay(false);
     } catch (err) {
       console.error(err?.data?.message || err.error);
     }

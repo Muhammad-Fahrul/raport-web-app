@@ -24,7 +24,7 @@ const Raport = () => {
   if (isLoading) {
     return <Loader />;
   } else if (isSuccess) {
-    raport = data;
+    raport = data || [];
   } else if (isError) {
     return <Error message={error.data?.message} />;
   }
@@ -56,9 +56,9 @@ const Raport = () => {
       {display && (
         <CreateRaport
           lastRaport={
-            raport.length >= 1
+            raport.length > 0
               ? raport[raport.length - 1]
-              : { titel: "", chapter: "" }
+              : { title: "", chapter: "" }
           }
           setDisplay={setDisplay}
         />

@@ -18,7 +18,7 @@ const Students = ({ students }) => {
               </strike>
             )}
           </p>
-          <p className="">{student.total || 0}</p>
+          <p className="">{student.total}</p>
         </div>
       </li>
     </Link>

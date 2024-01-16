@@ -54,38 +54,29 @@ const logoutUser = (req, res) => {
 // @route   PUT /api/mentors
 // @access  Private
 const updateProfile = asyncHandler(async (req, res) => {
-  const { userId } = req.user; // Ambil ID Mentor dari parameter request
-  const { password, fullname, nickname, ...others } = req.body;
-
-  const updateFields = {
-    ...others,
-    fullname: fullname?.toLocaleLowerCase(),
-    nickname: nickname?.toLocaleLowerCase(),
-  };
-
-  if (req.body.password) {
-    updateFields.password = req.body.password;
-  }
+  const { userId, isMentor } = req.user; // Ambil ID Mentor dari parameter request
+  const { password, fullname, nickname, phoneNumber } = req.body;
 
   let user;
 
-  if (req.user.isMentor) {
-    user = await Mentor.findOneAndUpdate(
-      { _id: userId },
-      { $set: updateFields },
-      { new: true }
-    );
+  if (isMentor) {
+    user = await Mentor.findById({ _id: userId });
   } else {
-    user = await Student.findOneAndUpdate(
-      { _id: userId },
-      { $set: updateFields },
-      { new: true }
-    );
+    user = await Student.findById({ _id: userId });
   }
 
   if (user) {
-    // Dokumen berhasil diupdate
-    res.status(200).json(user.sanitize());
+    user.fullname = fullname || user.fullname;
+    user.nickname = nickname || user.nickname;
+    user.phoneNumber = phoneNumber || user.phoneNumber;
+
+    if (req.body.password) {
+      user.password = password || req.body.password;
+    }
+
+    const updatedUser = await user.save();
+
+    res.json(updatedUser.sanitize());
   } else {
     // Tidak ada dokumen yang diupdate
     res.status(404);
@@ -120,8 +111,20 @@ const getTopStudents = asyncHandler(async (req, res) => {
       },
     },
     {
-      $addFields: {
-        lastRaport: { $arrayElemAt: ["$raports", -1] },
+      $unwind: "$raports", // Mengembangkan array raports
+    },
+    {
+      $match: {
+        "raports.status": true,
+      },
+    },
+    {
+      $group: {
+        _id: "$_id",
+        username: { $first: "$username" },
+        fullname: { $first: "$fullname" },
+        isQuran: { $first: "$isQuran" },
+        lastRaport: { $last: "$raports" },
       },
     },
     {

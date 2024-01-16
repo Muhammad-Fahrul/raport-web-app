@@ -179,7 +179,7 @@ const Profile = () => {
                 : "IQRO"
               : ""}
           </p>
-          <p>{userInfo?.username || "no name"}</p>
+          <p>{userInfo?.fullname}</p>
           <p>{userInfo?.phoneNumber}</p>
           {userInfo &&
             (userInfo.isMentor ? (

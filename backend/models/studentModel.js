@@ -10,9 +10,11 @@ const studentSchema = mongoose.Schema(
     },
     nickname: {
       type: String,
+      default: "no nickname",
     },
     fullname: {
       type: String,
+      default: "no fullname",
     },
     phoneNumber: {
       type: String,
