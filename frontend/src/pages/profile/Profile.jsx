@@ -7,6 +7,7 @@ import Loader from "../../components/loader/Loader";
 import ButtonIcon from "../../components/button/ButtonIcon";
 import Error from "../../components/error/Error";
 import Button from "../../components/button/Button";
+import { deleteStudent, setStudent } from "../../slices/studentSlice";
 const Profile = () => {
   const userInfo = useSelector((state) => state.auth.userInfo);
   const { userId } = useParams();
@@ -21,6 +22,7 @@ const Profile = () => {
         await logoutApiCall().unwrap();
         navigate("/login");
         dispatch(logout());
+        dispatch(deleteStudent());
       } catch (err) {
         console.error(err);
       }
@@ -185,10 +187,12 @@ const Profile = () => {
             (userInfo.isMentor ? (
               <Button url="/me/students" text="Students" />
             ) : (
-              <Button
-                url={`/me/students/raports/${userId}/${userInfo.username}`}
-                text="Raport"
-              />
+              <div onClick={() => dispatch(setStudent(userInfo))}>
+                <Button
+                  url={`/me/students/raports/${userId}/${userInfo.username}`}
+                  text="Raport"
+                />
+              </div>
             ))}
         </div>
       </div>

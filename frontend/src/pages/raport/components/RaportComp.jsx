@@ -3,9 +3,13 @@ import { useSelector } from "react-redux";
 import { useDelRaportMutation } from "../../../slices/mentorApiSlice";
 import Loader from "../../../components/loader/Loader";
 import "./raportComp.css";
+import { useState } from "react";
+import RaportModal from "./RaportModal";
 
 const RaportComp = ({ raport }) => {
+  const [display, setDisplay] = useState(false);
   const userInfo = useSelector((state) => state.auth.userInfo);
+  const [raportModal, setRaportModal] = useState({});
 
   const columns = [
     {
@@ -102,13 +106,18 @@ const RaportComp = ({ raport }) => {
       sortable: false,
       renderCell: (params) => {
         return (
-          <div
-            className="button-note"
-            style={{ cursor: "pointer" }}
-            onClick={() => alert(params.row.note)}
-          >
-            {params.row.note.split("").slice(0, 6).join("") + "..."}
-          </div>
+          <>
+            <div
+              className="button-note"
+              style={{ cursor: "pointer" }}
+              onClick={() => {
+                setRaportModal(params.row);
+                setDisplay(true);
+              }}
+            >
+              {params.row.note.split("").slice(0, 6).join("") + "..."}
+            </div>
+          </>
         );
       },
     },
@@ -169,13 +178,17 @@ const RaportComp = ({ raport }) => {
   }
 
   return (
-    <DataGrid
-      rows={raport}
-      disableRowSelectionOnClick
-      getRowId={(row) => row._id}
-      columns={columns}
-      disableColumnMenu
-    />
+    <div style={{ minHeight: "200px" }}>
+      <DataGrid
+        autoHeight
+        rows={raport}
+        disableRowSelectionOnClick
+        getRowId={(row) => row._id}
+        columns={columns}
+        disableColumnMenu
+      />
+      {display && <RaportModal raport={raportModal} setDisplay={setDisplay} />}
+    </div>
   );
 };
 

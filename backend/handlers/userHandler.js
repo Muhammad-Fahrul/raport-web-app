@@ -84,7 +84,7 @@ const updateProfile = asyncHandler(async (req, res) => {
   }
 });
 
-const getRaport = asyncHandler(async (req, res) => {
+const getRaportByStudentId = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const studentId = req.params.studentId;
 
@@ -158,4 +158,10 @@ const getTopStudents = asyncHandler(async (req, res) => {
   res.status(200).json(topStudents);
 });
 
-export { authUser, logoutUser, updateProfile, getRaport, getTopStudents };
+export {
+  authUser,
+  logoutUser,
+  updateProfile,
+  getRaportByStudentId,
+  getTopStudents,
+};

@@ -1,12 +1,12 @@
 import "./raport.css";
 import { useSelector } from "react-redux";
 import { useState } from "react";
+import { useGetRaportQuery } from "../../slices/usersApiSlice.js";
+import { useParams } from "react-router-dom";
+import ButtonIcon from "../../components/button/ButtonIcon.jsx";
 import CreateRaport from "./components/CreateRaport.jsx";
 import RaportComp from "./components/RaportComp.jsx";
-import ButtonIcon from "../../components/button/ButtonIcon.jsx";
-import { useGetRaportQuery } from "../../slices/usersApiSlice.js";
 import Loader from "../../components/loader/Loader.jsx";
-import { useParams } from "react-router-dom";
 import Error from "../../components/error/Error.jsx";
 
 const Raport = () => {
@@ -55,11 +55,7 @@ const Raport = () => {
       </ul>
       {display && (
         <CreateRaport
-          lastRaport={
-            raport.length > 0
-              ? raport[raport.length - 1]
-              : { title: "", chapter: "" }
-          }
+          lastRaport={raport[raport.length - 1]}
           setDisplay={setDisplay}
         />
       )}

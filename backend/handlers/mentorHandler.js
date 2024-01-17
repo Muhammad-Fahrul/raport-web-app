@@ -118,7 +118,7 @@ const getStudentsByMentorId = asyncHandler(async (req, res) => {
 // @desc    Create Student raport
 // @route   POST /api/mentors/students/raport
 // @access  Private (Mentor only)
-const addRaport = asyncHandler(async (req, res) => {
+const createRaport = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const { title, chapter, page, verse, note, status } = req.body;
   const { studentId } = req.params;
@@ -161,6 +161,6 @@ export {
   registerMentor,
   createStudent,
   getStudentsByMentorId,
-  addRaport,
+  createRaport,
   deleteRaportById,
 };

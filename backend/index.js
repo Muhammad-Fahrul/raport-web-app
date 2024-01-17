@@ -21,7 +21,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 
 app.use("/api/mentors", mentorRoute);
-app.use("/api/students", studentRoute);
+// app.use("/api/students", studentRoute);
 app.use("/api/users", userRoute);
 
 if (process.env.NODE_ENV === "production") {

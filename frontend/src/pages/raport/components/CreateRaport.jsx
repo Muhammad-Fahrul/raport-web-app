@@ -4,7 +4,10 @@ import Loader from "../../../components/loader/Loader";
 import "./createRaport.css";
 import { useState, useEffect } from "react";
 
-const CreateRaport = ({ lastRaport, setDisplay }) => {
+const CreateRaport = ({
+  lastRaport = { title: "", chapter: "" },
+  setDisplay,
+}) => {
   const { studentId } = useParams();
   const [title, setTitle] = useState("");
   const [chapter, setChapter] = useState("");
@@ -15,7 +18,8 @@ const CreateRaport = ({ lastRaport, setDisplay }) => {
   useEffect(() => {
     setTitle(lastRaport.title);
     setChapter(lastRaport.chapter);
-  }, [lastRaport, lastRaport.title, lastRaport.chapter]);
+    setNote("Tidak ada catatan");
+  }, [lastRaport.title, lastRaport.chapter]);
 
   const [createRaport, { isLoading, isError, error }] =
     useCreateRaportMutation();

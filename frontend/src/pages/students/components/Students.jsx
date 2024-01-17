@@ -1,10 +1,20 @@
+import { useDispatch } from "react-redux";
 import { Link } from "react-router-dom";
+import { setStudent } from "../../../slices/studentSlice";
 
 const Students = ({ students }) => {
+  const dispatch = useDispatch();
+
+  const handleClick = (student) => {
+    console.log(student);
+    dispatch(setStudent(student));
+  };
+
   let content = students.map((student) => (
     <Link
       key={student._id}
       to={`/me/students/raports/${student._id}/${student.username}`}
+      onClick={() => handleClick(student)}
     >
       <li className="wrapper-card">
         <div className="card-img"></div>

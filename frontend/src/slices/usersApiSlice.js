@@ -45,6 +45,12 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
       providesTags: ["Raport"],
     }),
+    getAudioRaport: builder.query({
+      query: (id) => ({
+        url: `https://equran.id/api/v2/surat/${id}`,
+        method: "GET",
+      }),
+    }),
   }),
 });
 
@@ -55,4 +61,5 @@ export const {
   useUpdateUserMutation,
   useGetRaportQuery,
   useGetTopStudentsQuery,
+  useGetAudioRaportQuery,
 } = userApiSlice;
