@@ -38,6 +38,14 @@ const RaportModal = ({ raport, setDisplay }) => {
     }
   }, [play]);
 
+  let audio;
+  if (isSuccess) {
+    if (student.isQuran) {
+      audio = data.data.ayat[raport.verse].audio["02"];
+    } else {
+      audio = null;
+    }
+  }
   return (
     <div
       className="container-raport-modal"
@@ -90,10 +98,7 @@ const RaportModal = ({ raport, setDisplay }) => {
             </div>
             <div>
               <audio ref={audioRef}>
-                <source
-                  src={data.data.ayat[raport.verse].audio["01"]}
-                  type="audio/mpeg"
-                />
+                <source src={audio} type="audio/mpeg" />
               </audio>
               <span className="name">
                 <p>

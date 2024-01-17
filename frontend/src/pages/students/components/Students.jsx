@@ -6,7 +6,6 @@ const Students = ({ students }) => {
   const dispatch = useDispatch();
 
   const handleClick = (student) => {
-    console.log(student);
     dispatch(setStudent(student));
   };
 
