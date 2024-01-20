@@ -38,7 +38,7 @@ const router = createBrowserRouter(
           <Route path="me/students" element={<MyStudents />} />
         </Route>
         <Route
-          path="me/students/raports/:studentId/:studentName"
+          path="me/students/:studentId/raports"
           element={<Raport />}
           loader={raportLoader}
         />

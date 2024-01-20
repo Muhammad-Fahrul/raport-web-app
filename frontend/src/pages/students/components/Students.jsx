@@ -12,7 +12,7 @@ const Students = ({ students }) => {
   let content = students.map((student) => (
     <Link
       key={student._id}
-      to={`/me/students/raports/${student._id}/${student.username}`}
+      to={`/me/students/${student._id}/raports`}
       onClick={() => handleClick(student)}
     >
       <li className="wrapper-card">

@@ -1,10 +1,10 @@
 import asyncHandler from "express-async-handler";
+import { generateToken } from "../utils/generateToken.js";
 import Mentor from "../models/mentorModel.js";
 import Student from "../models/studentModel.js";
-import { generateToken } from "../utils/generateToken.js";
 import Raport from "../models/raportModel.js";
 
-// @desc    Auth user & get token
+// @desc    Login user & get token
 // @route   POST /api/users/auth
 // @access  Public
 const authUser = asyncHandler(async (req, res) => {
@@ -19,8 +19,8 @@ const authUser = asyncHandler(async (req, res) => {
   }
 
   if (!user) {
-    res.status(400);
-    throw new Error("User not exist");
+    res.status(401);
+    throw new Error("Unauthorized");
   }
 
   if (user && (await user.matchPassword(password))) {
@@ -30,7 +30,7 @@ const authUser = asyncHandler(async (req, res) => {
 
     res.json(resJson);
   } else {
-    res.status(401);
+    res.status(400);
     throw new Error("Invalid email or password");
   }
 });
@@ -50,9 +50,9 @@ const logoutUser = (req, res) => {
   res.status(200).json({ message: "All cookies deleted successfully" });
 };
 
-// @desc    Update Mentor
-// @route   PUT /api/mentors
-// @access  Private
+// @desc    Update User Profile by User (mentor/student)
+// @route   PUT /api/users/profile
+// @access  Private Student/Mentor
 const updateProfile = asyncHandler(async (req, res) => {
   const { userId, isMentor } = req.user; // Ambil ID Mentor dari parameter request
   const { password, fullname, nickname, phoneNumber } = req.body;
@@ -84,7 +84,10 @@ const updateProfile = asyncHandler(async (req, res) => {
   }
 });
 
-const getRaportByStudentId = asyncHandler(async (req, res) => {
+// @desc    Get student's raport by User
+// @route   PUT /api/users/raport/:studentId
+// @access  Private Student/Mentor
+const getRaportsByStudentId = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const studentId = req.params.studentId;
 
@@ -100,6 +103,9 @@ const getRaportByStudentId = asyncHandler(async (req, res) => {
   res.status(200).json(raport);
 });
 
+// @desc    Update Mentor
+// @route   PUT /api/users/rank
+// @access  Public
 const getTopStudents = asyncHandler(async (req, res) => {
   const topStudents = await Student.aggregate([
     {
@@ -162,6 +168,6 @@ export {
   authUser,
   logoutUser,
   updateProfile,
-  getRaportByStudentId,
+  getRaportsByStudentId,
   getTopStudents,
 };

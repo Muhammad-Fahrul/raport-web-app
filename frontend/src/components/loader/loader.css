@@ -92,6 +92,7 @@
   inset: 0;
   background-color: rgba(0, 0, 0, 0.384);
 }
+
 .loader {
   position: relative;
   width: 96px;

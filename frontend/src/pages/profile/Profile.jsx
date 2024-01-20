@@ -20,9 +20,9 @@ const Profile = () => {
     const removeCred = async () => {
       try {
         await logoutApiCall().unwrap();
-        navigate("/login");
         dispatch(logout());
         dispatch(deleteStudent());
+        navigate("/login");
       } catch (err) {
         console.error(err);
       }
@@ -188,10 +188,7 @@ const Profile = () => {
               <Button url="/me/students" text="Students" />
             ) : (
               <div onClick={() => dispatch(setStudent(userInfo))}>
-                <Button
-                  url={`/me/students/raports/${userId}/${userInfo.username}`}
-                  text="Raport"
-                />
+                <Button url={`/me/students/${userId}/raports`} text="Raport" />
               </div>
             ))}
         </div>

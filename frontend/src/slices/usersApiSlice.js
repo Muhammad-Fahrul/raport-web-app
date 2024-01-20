@@ -32,11 +32,11 @@ export const userApiSlice = apiSlice.injectEndpoints({
       }),
     }),
     getRaport: builder.query({
-      query: (id) => ({
-        url: `${USERS_URL}/raports/${id}`,
-        method: "GET",
-      }),
-      providesTags: ["Raport"],
+      query: ({ studentId }) => `${USERS_URL}/raports/${studentId}`,
+      providesTags: (result, error, arg) => [
+        { type: "Raport", id: arg.studentId },
+        ...result.map((raport) => ({ type: "Raport", id: raport._id })),
+      ],
     }),
     getTopStudents: builder.query({
       query: () => ({
@@ -46,10 +46,10 @@ export const userApiSlice = apiSlice.injectEndpoints({
       providesTags: ["Raport"],
     }),
     getAudioRaport: builder.query({
-      query: (id) => ({
-        url: `https://equran.id/api/v2/surat/${id}`,
-        method: "GET",
-      }),
+      query: ({ chap }) => `https://equran.id/api/v2/surat/${chap}`,
+      transformResponse: (response, meta, arg) => {
+        return response.data.ayat[arg.ver - 1].audio["05"];
+      },
     }),
   }),
 });

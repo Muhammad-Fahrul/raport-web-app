@@ -37,7 +37,7 @@ const registerMentor = asyncHandler(async (req, res) => {
 
 // @desc    Create Student
 // @route   POST /api/mentors/students
-// @access  Private (Mentor only)
+// @access  Private
 const createStudent = asyncHandler(async (req, res) => {
   const { username, ...others } = req.body;
   const mentorId = req.user.userId;
@@ -62,7 +62,7 @@ const createStudent = asyncHandler(async (req, res) => {
 
 // @desc    Get Students
 // @route   GET /api/mentors/students
-// @access  Private (Mentor only)
+// @access  Private
 const getStudentsByMentorId = asyncHandler(async (req, res) => {
   const mentorId = req.user.userId; // Ambil ID mentor dari request, sesuaikan dengan kebutuhan Anda
 
@@ -117,7 +117,7 @@ const getStudentsByMentorId = asyncHandler(async (req, res) => {
 
 // @desc    Create Student raport
 // @route   POST /api/mentors/students/raport
-// @access  Private (Mentor only)
+// @access  Private
 const createRaport = asyncHandler(async (req, res) => {
   const { userId } = req.user;
   const { title, chapter, page, verse, note, status } = req.body;
@@ -148,7 +148,7 @@ const createRaport = asyncHandler(async (req, res) => {
 
 // @desc    Delelte Student raport
 // @route   POST /api/mentors/students/raport/:raportId
-// @access  Private (Mentor only)
+// @access  Private
 const deleteRaportById = asyncHandler(async (req, res) => {
   const { raportId } = req.params;
 

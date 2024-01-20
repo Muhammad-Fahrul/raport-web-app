@@ -10,21 +10,22 @@ import Loader from "../../components/loader/Loader.jsx";
 import Error from "../../components/error/Error.jsx";
 
 const Raport = () => {
-  const { studentId, studentName } = useParams();
-
+  const { studentId } = useParams();
   const [display, setDisplay] = useState(false);
 
   const { userInfo } = useSelector((state) => state.auth);
+  const { student } = useSelector((state) => state.student);
 
-  const { data, isSuccess, isLoading, isError, error } =
-    useGetRaportQuery(studentId);
+  const { data, isSuccess, isLoading, isError, error } = useGetRaportQuery({
+    studentId,
+  });
 
   let raport;
 
   if (isLoading) {
     return <Loader />;
   } else if (isSuccess) {
-    raport = data || [];
+    raport = data;
   } else if (isError) {
     return <Error message={error.data?.message} />;
   }
@@ -49,7 +50,7 @@ const Raport = () => {
       <ul className="students-wrapper">
         <div className="username">
           <h1>Achivements </h1>
-          <p>{studentName}</p>
+          <p>{student.username}</p>
         </div>
         {<RaportComp raport={raport} />}
       </ul>

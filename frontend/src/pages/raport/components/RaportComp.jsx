@@ -8,7 +8,7 @@ import RaportModal from "./RaportModal";
 
 const RaportComp = ({ raport }) => {
   const [display, setDisplay] = useState(false);
-  const userInfo = useSelector((state) => state.auth.userInfo);
+  const { userInfo } = useSelector((state) => state.auth);
   const [raportModal, setRaportModal] = useState({});
 
   const columns = [
@@ -157,16 +157,16 @@ const RaportComp = ({ raport }) => {
 
   const [delRaport, { isLoading }] = useDelRaportMutation();
 
-  const handleDelete = (e, id) => {
+  const handleDelete = (e, raportId) => {
     e.preventDefault();
     const del = async () => {
       if (confirm("anda yakin ingin menghapusnya?")) {
         try {
-          await delRaport({ id });
-          alert(`${id} berhasil dihapus`);
+          await delRaport({ raportId });
+          alert(`${raportId} berhasil dihapus`);
         } catch (err) {
           console.error(err);
-          alert(`${id} gagal dihapus`);
+          alert(`${raportId} gagal dihapus`);
         }
       }
     };

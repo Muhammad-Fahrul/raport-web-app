@@ -7,9 +7,10 @@ const RaportModal = ({ raport, setDisplay }) => {
   const [play, setPlay] = useState(false);
   const audioRef = useRef(null);
   const { student } = useSelector((state) => state.student);
-  const { data, isSuccess, isLoading, isError } = useGetAudioRaportQuery(
-    raport.chapter
-  );
+  const { data, isSuccess, isLoading, isError } = useGetAudioRaportQuery({
+    chap: raport.chapter,
+    ver: raport.verse,
+  });
 
   useEffect(() => {
     const handleAudioEnded = () => {
@@ -38,10 +39,11 @@ const RaportModal = ({ raport, setDisplay }) => {
     }
   }, [play]);
 
+  console.log(data);
   let audio;
   if (isSuccess) {
     if (student.isQuran) {
-      audio = data.data.ayat[raport.verse].audio["02"];
+      audio = data;
     } else {
       audio = null;
     }
