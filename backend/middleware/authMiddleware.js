@@ -1,5 +1,4 @@
 import jwt from "jsonwebtoken";
-import Student from "../models/studentModel.js";
 
 const verifyToken = (req, res, next) => {
   let token;

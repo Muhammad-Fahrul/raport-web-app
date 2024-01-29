@@ -17,7 +17,7 @@ import NotFound from "./pages/notFound/NotFound.jsx";
 import { Provider } from "react-redux";
 import store from "./store.js";
 import {
-  signLoader,
+  loginLoader,
   mentorLoader,
   raportLoader,
   userLoader,
@@ -30,7 +30,7 @@ const router = createBrowserRouter(
   createRoutesFromElements(
     <Route path="/" element={<MainLayout />}>
       <Route index element={<Home />} />
-      <Route path="login" element={<Login />} loader={signLoader} />
+      <Route path="login" element={<Login />} loader={loginLoader} />
       <Route path="register" element={<Register />} />
       <Route loader={userLoader}>
         <Route loader={mentorLoader}>

@@ -1,6 +1,6 @@
 import { redirect } from "react-router-dom";
 
-export const signLoader = ({ request }) => {
+export const loginLoader = ({ request }) => {
   const userInfo = JSON.parse(localStorage.getItem("userInfo")) || null;
   if (userInfo) {
     throw redirect("/");

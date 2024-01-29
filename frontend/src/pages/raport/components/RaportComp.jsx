@@ -1,10 +1,10 @@
-import { DataGrid } from "@mui/x-data-grid";
-import { useSelector } from "react-redux";
-import { useDelRaportMutation } from "../../../slices/mentorApiSlice";
-import Loader from "../../../components/loader/Loader";
-import "./raportComp.css";
-import { useState } from "react";
-import RaportModal from "./RaportModal";
+import { DataGrid } from '@mui/x-data-grid';
+import { useSelector } from 'react-redux';
+import { useDelRaportMutation } from '../../../slices/mentorApiSlice';
+import Loader from '../../../components/loader/Loader';
+import './raportComp.css';
+import { useState } from 'react';
+import RaportModal from './RaportModal';
 
 const RaportComp = ({ raport }) => {
   const [display, setDisplay] = useState(false);
@@ -13,33 +13,33 @@ const RaportComp = ({ raport }) => {
 
   const columns = [
     {
-      field: "title",
-      headerName: "Title",
+      field: 'title',
+      headerName: 'Title',
       width: 100,
       sortable: false,
     },
     {
-      field: "chapter",
-      headerName: "Chapter",
+      field: 'chapter',
+      headerName: 'Chapter',
       width: 80,
       sortable: false,
-      align: "center",
-      headerAlign: "center",
+      align: 'center',
+      headerAlign: 'center',
     },
     {
-      field: "verse",
-      headerName: "Verse",
+      field: 'verse',
+      headerName: 'Verse',
       width: 60,
       sortable: false,
-      align: "center",
-      headerAlign: "center",
+      align: 'center',
+      headerAlign: 'center',
     },
     {
-      field: "status",
-      headerName: "status",
+      field: 'status',
+      headerName: 'status',
       width: 70,
-      align: "center",
-      headerAlign: "center",
+      align: 'center',
+      headerAlign: 'center',
       sortable: false,
       renderCell: (params) => {
         return (
@@ -54,17 +54,17 @@ const RaportComp = ({ raport }) => {
                   x="0px"
                   y="0px"
                   viewBox="0 0 50 50"
-                  style={{ enableBackground: "new 0 0 50 50" }}
+                  style={{ enableBackground: 'new 0 0 50 50' }}
                   xmlSpace="preserve"
                 >
-                  <circle style={{ fill: "#25AE88" }} cx="25" cy="25" r="25" />
+                  <circle style={{ fill: '#25AE88' }} cx="25" cy="25" r="25" />
                   <polyline
                     style={{
-                      fill: "none",
-                      stroke: "#FFFFFF",
+                      fill: 'none',
+                      stroke: '#FFFFFF',
                       strokeWidth: 2,
-                      strokeLinecap: "round",
-                      strokeLinejoin: "round",
+                      strokeLinecap: 'round',
+                      strokeLinejoin: 'round',
                       strokeMiterlimit: 10,
                     }}
                     points="38,15 22,33 12,25"
@@ -100,8 +100,8 @@ const RaportComp = ({ raport }) => {
       },
     },
     {
-      field: "note",
-      headerName: "Note",
+      field: 'note',
+      headerName: 'Note',
       width: 80,
       sortable: false,
       renderCell: (params) => {
@@ -109,13 +109,13 @@ const RaportComp = ({ raport }) => {
           <>
             <div
               className="button-note"
-              style={{ cursor: "pointer" }}
+              style={{ cursor: 'pointer' }}
               onClick={() => {
                 setRaportModal(params.row);
                 setDisplay(true);
               }}
             >
-              {params.row.note.split("").slice(0, 6).join("") + "..."}
+              {params.row.note.split('').slice(0, 6).join('') + '...'}
             </div>
           </>
         );
@@ -125,12 +125,12 @@ const RaportComp = ({ raport }) => {
 
   if (userInfo && userInfo.isMentor) {
     columns.push({
-      field: "action",
-      headerName: "Del",
+      field: 'action',
+      headerName: 'Del',
       width: 10,
       sortable: false,
-      headerAlign: "center",
-      align: "center",
+      headerAlign: 'center',
+      align: 'center',
       renderCell: (params) => {
         return (
           <div>
@@ -160,7 +160,7 @@ const RaportComp = ({ raport }) => {
   const handleDelete = (e, raportId) => {
     e.preventDefault();
     const del = async () => {
-      if (confirm("anda yakin ingin menghapusnya?")) {
+      if (confirm('anda yakin ingin menghapusnya?')) {
         try {
           await delRaport({ raportId });
           alert(`${raportId} berhasil dihapus`);
@@ -178,9 +178,8 @@ const RaportComp = ({ raport }) => {
   }
 
   return (
-    <div style={{ minHeight: "200px" }}>
+    <div style={{ height: '500px', paddingBottom: '3em' }}>
       <DataGrid
-        autoHeight
         rows={raport}
         disableRowSelectionOnClick
         getRowId={(row) => row._id}
