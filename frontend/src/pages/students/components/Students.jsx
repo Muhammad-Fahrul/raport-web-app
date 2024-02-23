@@ -1,6 +1,6 @@
-import { useDispatch } from "react-redux";
-import { Link } from "react-router-dom";
-import { setStudent } from "../../../slices/studentSlice";
+import { useDispatch } from 'react-redux';
+import { Link } from 'react-router-dom';
+import { setStudent } from '../../../slices/studentSlice';
 
 const Students = ({ students }) => {
   const dispatch = useDispatch();
@@ -18,9 +18,7 @@ const Students = ({ students }) => {
       <li className="wrapper-card">
         <div className="card-img"></div>
         <div className="card-text-box">
-          <p className="card-title">
-            {student.nickname ? student.nickname : student.username}
-          </p>
+          <p className="card-title">{student.username}</p>
           <div className="card-text-content">
             {student.raport && (
               <>
