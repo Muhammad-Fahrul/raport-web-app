@@ -1,17 +1,22 @@
-import "./register.css";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
-import { useRegisterMutation } from "../../slices/usersApiSlice";
-import { setCredentials } from "../../slices/authSlice";
-import { useState } from "react";
-import Loader from "../../components/loader/Loader";
+import './register.css';
+import { useNavigate } from 'react-router-dom';
+import { useDispatch } from 'react-redux';
+import { useRegisterMutation } from '../../slices/usersApiSlice';
+import { setCredentials } from '../../slices/authSlice';
+import { useEffect, useState } from 'react';
+import Loader from '../../components/loader/Loader';
+
 const Register = () => {
-  const [username, setUsername] = useState("");
-  const [phoneNumber, setphoneNumber] = useState("");
-  const [password, setPassword] = useState("");
+  const [username, setUsername] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('');
+  const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(username);
+  }, [username]);
 
   const [register, { isLoading }] = useRegisterMutation();
 
@@ -25,7 +30,7 @@ const Register = () => {
           password,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate("/");
+        navigate('/');
       } catch (err) {
         console.error(err?.data?.message || err.error);
       }
@@ -41,7 +46,7 @@ const Register = () => {
           <input
             className="flip-card__input"
             name="username"
-            placeholder="Name"
+            placeholder="Username"
             type="text"
             onChange={(e) => setUsername(e.target.value)}
           />

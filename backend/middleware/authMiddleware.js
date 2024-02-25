@@ -1,47 +1,23 @@
-import jwt from "jsonwebtoken";
+const jwt = require('jsonwebtoken');
+const User = require('../models/User');
 
-const verifyToken = (req, res, next) => {
-  let token;
+const authMiddleware = async (req, res, next) => {
+  // Check for token in headers
+  const token = req.header('x-auth-token');
+  if (!token) {
+    return res.status(401).json({ msg: 'No token, authorization denied' });
+  }
 
-  token = req.cookies.jwt;
+  try {
+    // Verify token
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
-  if (token) {
-    try {
-      const decoded = jwt.verify(token, process.env.JWT_SECRET);
-      req.user = decoded;
-      next();
-    } catch (error) {
-      res.status(403);
-      throw new Error("you are not allowed to do this");
-    }
-  } else {
-    res.status(401);
-    throw new Error("You are not authenticated");
+    // Add user from payload
+    req.user = await User.findById(decoded.id).select('-password');
+    next();
+  } catch (err) {
+    return res.status(401).json({ msg: 'Token is not valid' });
   }
 };
 
-const mentorProtect = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (req.user.isMentor) {
-      next();
-    }
-  });
-};
-
-const studentProtect = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (!req.user.isMentor) {
-      next();
-    }
-  });
-};
-
-const mentorStudentProtect = (req, res, next) => {
-  verifyToken(req, res, () => {
-    if (req.user) {
-      next();
-    }
-  });
-};
-
-export { mentorProtect, studentProtect, mentorStudentProtect };
+module.exports = authMiddleware;
