@@ -1,59 +1,37 @@
-import { useState } from "react";
-import "./students.css";
-import ButtonIcon from "../../components/button/ButtonIcon.jsx";
-import Students from "./components/Students.jsx";
-import { Link } from "react-router-dom";
-import Loader from "../../components/loader/Loader.jsx";
-import Error from "../../components/error/Error.jsx";
-import { useGetStudentsQuery } from "../../slices/mentorApiSlice.js";
+import './students.css';
+import ButtonIcon from '../../components/button/ButtonIcon.jsx';
+import Students from './components/Students.jsx';
+import { Link } from 'react-router-dom';
+import Loader from '../../components/loader/Loader.jsx';
+import Error from '../../components/error/Error.jsx';
+import { useGetAllStudentQuery } from '../../slices/mentorApiSlice.js';
 
 const MyStudents = () => {
-  const [display, setDisplay] = useState(true);
+  const { data, isSuccess, isLoading, isError, error } =
+    useGetAllStudentQuery();
 
-  const {
-    data: students,
-    isSuccess,
-    isLoading,
-    isError,
-    error,
-  } = useGetStudentsQuery();
-
-  let displayedStudents;
-
+  let students;
   if (isLoading) {
     return <Loader />;
   } else if (isSuccess) {
-    if (display) {
-      displayedStudents = students.filter((student) => student.isQuran);
-    } else {
-      displayedStudents = students.filter((student) => !student.isQuran);
-    }
+    students = data.students;
   } else if (isError) {
     return <Error message={error.data?.message} />;
   }
-
   return (
     <div className="container-students">
       <h1>My students</h1>
-      <div className="toggle-students-opt">
-        <button
-          className={display ? "active" : ""}
-          onClick={() => setDisplay(true)}
-        >
-          Al-Quran
-        </button>
-        <button
-          className={display ? "" : "active"}
-          onClick={() => setDisplay(false)}
-        >
-          IQRO
-        </button>
-      </div>
+
       <ul className="container-card">
-        <Students students={displayedStudents} />
+        {students.length > 0 ? (
+          <Students students={students} />
+        ) : (
+          <h1>tidak ada siswa</h1>
+        )}
       </ul>
-      <Link to="/me/students/new">
-        <ButtonIcon text={"NEW"}>
+
+      <Link to="/students">
+        <ButtonIcon text={'NEW'}>
           <svg
             className="w-6 h-6 text-gray-800 dark:text-white"
             aria-hidden="true"

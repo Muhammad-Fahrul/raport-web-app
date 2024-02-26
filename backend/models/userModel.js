@@ -17,10 +17,11 @@ const UserSchema = new mongoose.Schema({
   },
   role: {
     type: String,
-    enum: ['admin', 'mentor', 'student'],
+    enum: ['mentor', 'student'],
+    required: true,
   },
   mentor: {
-    type: mongoose.Schema.Types.ObjectId,
+    type: String,
     ref: 'User',
   },
 });

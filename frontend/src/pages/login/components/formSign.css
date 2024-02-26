@@ -1,4 +1,4 @@
-.flip-card__form {
+.__form {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -20,7 +20,7 @@
   color: var(--main-color);
 }
 
-.flip-card__input {
+.__input {
   height: 40px;
   border-radius: 5px;
   border: 2px solid var(--main-color);
@@ -34,36 +34,36 @@
   outline: none;
 }
 
-.flip-card__input::-webkit-input-placeholder {
+.__input::-webkit-input-placeholder {
   color: var(--font-color-sub);
   opacity: 0.8;
 }
 
-.flip-card__input::-moz-placeholder {
+.__input::-moz-placeholder {
   color: var(--font-color-sub);
   opacity: 0.8;
 }
 
-.flip-card__input:-ms-input-placeholder {
+.__input:-ms-input-placeholder {
   color: var(--font-color-sub);
   opacity: 0.8;
 }
 
-.flip-card__input::-ms-input-placeholder {
+.__input::-ms-input-placeholder {
   color: var(--font-color-sub);
   opacity: 0.8;
 }
 
-.flip-card__input::placeholder {
+.__input::placeholder {
   color: var(--font-color-sub);
   opacity: 0.8;
 }
 
-.flip-card__input:focus {
+.__input:focus {
   border: 2px solid var(--input-focus);
 }
 
-.flip-card__btn:active,
+.__btn:active,
 .button-confirm:active {
   -webkit-box-shadow: 0px 0px var(--main-color);
   box-shadow: 0px 0px var(--main-color);
@@ -72,7 +72,7 @@
   transform: translate(3px, 3px);
 }
 
-.flip-card__btn {
+.__btn {
   margin: 20px 0 20px 0;
   width: 120px;
   height: 40px;

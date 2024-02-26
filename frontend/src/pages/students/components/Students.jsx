@@ -1,32 +1,14 @@
-import { useDispatch } from 'react-redux';
 import { Link } from 'react-router-dom';
-import { setStudent } from '../../../slices/studentSlice';
 
 const Students = ({ students }) => {
-  const dispatch = useDispatch();
-
-  const handleClick = (student) => {
-    dispatch(setStudent(student));
-  };
-
+  console.log(students)
   let content = students.map((student) => (
-    <Link
-      key={student._id}
-      to={`/me/students/${student._id}/raports`}
-      onClick={() => handleClick(student)}
-    >
+    <Link key={student._id} to={`/me/students/${student._id}/raports`}>
       <li className="wrapper-card">
         <div className="card-img"></div>
         <div className="card-text-box">
           <p className="card-title">{student.username}</p>
-          <div className="card-text-content">
-            {student.raport && (
-              <>
-                <p className="card-detail">{student.raport.title}</p>
-                <p className="card-detail">{student.raport.verse}</p>
-              </>
-            )}
-          </div>
+          <div className="card-text-content"></div>
         </div>
       </li>
     </Link>

@@ -1,31 +1,32 @@
-import "./createStudent.css";
-import { useState } from "react";
-import { useCreateStudentMutation } from "../../slices/mentorApiSlice.js";
-import Loader from "../../components/loader/Loader.jsx";
+import './createStudent.css';
+import { useState } from 'react';
+import { useAddNewStudentMutation } from '../../slices/mentorApiSlice.js';
+import Loader from '../../components/loader/Loader.jsx';
+import { selectCurrentToken } from '../../slices/authSlice.js';
+import { useSelector } from 'react-redux';
 
 const CreateStudent = () => {
-  const [username, setUsername] = useState("");
-  const [phoneNumber, setphoneNumber] = useState("");
-  const [password, setPassword] = useState("");
-  const [grade, setGrade] = useState(false);
+  const token = useSelector((state) => selectCurrentToken(state));
+  console.log(token);
+  const [username, setUsername] = useState('');
+  const [phoneNumber, setphoneNumber] = useState('');
+  const [password, setPassword] = useState('');
 
-  const [createStudent, { isLoading }] = useCreateStudentMutation();
+  const [addNewStudent, { isLoading }] = useAddNewStudentMutation();
 
   const submitHandler = (e) => {
     e.preventDefault();
     const addStudent = async () => {
       try {
-        const res = await createStudent({
+        const res = await addNewStudent({
           username,
           phoneNumber,
           password,
-          isQuran: grade,
         }).unwrap();
         alert(`${res.username} berhasil ditambahkan`);
-        setUsername("");
-        setphoneNumber("");
-        setPassword("");
-        setGrade(false);
+        setUsername('');
+        setphoneNumber('');
+        setPassword('');
       } catch (err) {
         console.error(err?.data?.message || err.error);
         alert(`${username} gagal ditambahkan`);
@@ -50,6 +51,7 @@ const CreateStudent = () => {
           />
           <span>Username</span>
         </div>
+
         <div className="inputBox1">
           <input
             type="text"
@@ -68,17 +70,6 @@ const CreateStudent = () => {
             onChange={(e) => setPassword(e.target.value)}
           />
           <span>Password</span>
-        </div>
-
-        <div className="input-grade">
-          <label htmlFor="grade">Al-Qur&#39;an</label>
-          <input
-            id="grade"
-            type="checkbox"
-            onChange={() => {
-              setGrade(!grade);
-            }}
-          />
         </div>
 
         <button className="enter">Enter</button>

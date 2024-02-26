@@ -30,7 +30,7 @@ const Register = () => {
           password,
         }).unwrap();
         dispatch(setCredentials({ ...res }));
-        navigate('/');
+        // navigate('/');
       } catch (err) {
         console.error(err?.data?.message || err.error);
       }
@@ -40,31 +40,31 @@ const Register = () => {
 
   return (
     <div className="wrapper">
-      <div className="flip-card__front register">
+      <div className=" register">
         <div className="title">Sign Up</div>
-        <form className="flip-card__form" onSubmit={submitHandler}>
+        <form className="__form" onSubmit={submitHandler}>
           <input
-            className="flip-card__input"
+            className="__input"
             name="username"
             placeholder="Username"
             type="text"
             onChange={(e) => setUsername(e.target.value)}
           />
           <input
-            className="flip-card__input"
+            className="__input"
             name="phoneNumber"
             placeholder="Phone Number"
             onChange={(e) => setphoneNumber(e.target.value)}
             type="text"
           />
           <input
-            className="flip-card__input"
+            className="__input"
             name="password"
             placeholder="Password"
             onChange={(e) => setPassword(e.target.value)}
             type="password"
           />
-          <button className="flip-card__btn">Lets go!</button>
+          <button className="__btn">Lets go!</button>
         </form>
       </div>
       {isLoading && <Loader />}

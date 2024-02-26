@@ -1,28 +1,26 @@
-import { useDispatch, useSelector } from "react-redux";
-import "./profile.css";
-import { Link, useNavigate, useParams } from "react-router-dom";
-import { useLogoutMutation } from "../../slices/usersApiSlice";
-import { logout } from "../../slices/authSlice";
-import Loader from "../../components/loader/Loader";
-import ButtonIcon from "../../components/button/ButtonIcon";
-import Error from "../../components/error/Error";
-import Button from "../../components/button/Button";
-import { deleteStudent, setStudent } from "../../slices/studentSlice";
+import { useDispatch, useSelector } from 'react-redux';
+import './profile.css';
+import { Link, useNavigate, useParams } from 'react-router-dom';
+import { useLogoutMutation } from '../../slices/usersApiSlice';
+import Loader from '../../components/loader/Loader';
+import ButtonIcon from '../../components/button/ButtonIcon';
+import Error from '../../components/error/Error';
+import Button from '../../components/button/Button';
+import { deleteStudent, setStudent } from '../../slices/studentSlice';
 const Profile = () => {
-  const userInfo = useSelector((state) => state.auth.userInfo);
   const { userId } = useParams();
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
-  const [logoutApiCall, { isLoading }] = useLogoutMutation();
+  const [logout, { isLoading }] = useLogoutMutation();
 
   const logoutHandler = () => {
     const removeCred = async () => {
       try {
-        await logoutApiCall().unwrap();
+        await logout().unwrap();
         dispatch(logout());
         dispatch(deleteStudent());
-        navigate("/login");
+        navigate('/login');
       } catch (err) {
         console.error(err);
       }
@@ -90,9 +88,9 @@ const Profile = () => {
             ></path>
             <path
               style={{
-                fill: "none",
-                strokeLinecap: "round",
-                stroke: "#fff",
+                fill: 'none',
+                strokeLinecap: 'round',
+                stroke: '#fff',
                 strokeMiterlimit: 10,
                 strokeWidth: 2,
                 opacity: 0.1,
@@ -101,9 +99,9 @@ const Profile = () => {
             ></path>
             <path
               style={{
-                fill: "none",
-                strokeLinecap: "round",
-                stroke: "#fff",
+                fill: 'none',
+                strokeLinecap: 'round',
+                stroke: '#fff',
                 strokeMiterlimit: 10,
                 strokeWidth: 2,
                 opacity: 0.1,
@@ -175,11 +173,11 @@ const Profile = () => {
           <p>
             {userInfo
               ? userInfo.isMentor
-                ? "Mustami"
+                ? 'Mustami'
                 : userInfo.isQuran
                 ? "Al-Qur'an"
-                : "IQRO"
-              : ""}
+                : 'IQRO'
+              : ''}
           </p>
           <p>{userInfo?.fullname}</p>
           <p>{userInfo?.phoneNumber}</p>
@@ -194,7 +192,7 @@ const Profile = () => {
         </div>
       </div>
       <div onClick={logoutHandler}>
-        <ButtonIcon text={"Logout"}>
+        <ButtonIcon text={'Logout'}>
           <svg viewBox="0 0 512 512">
             <path d="M377.9 105.9L500.7 228.7c7.2 7.2 11.3 17.1 11.3 27.3s-4.1 20.1-11.3 27.3L377.9 406.1c-6.4 6.4-15 9.9-24 9.9c-18.7 0-33.9-15.2-33.9-33.9l0-62.1-128 0c-17.7 0-32-14.3-32-32l0-64c0-17.7 14.3-32 32-32l128 0 0-62.1c0-18.7 15.2-33.9 33.9-33.9c9 0 17.6 3.6 24 9.9zM160 96L96 96c-17.7 0-32 14.3-32 32l0 256c0 17.7 14.3 32 32 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32l-64 0c-53 0-96-43-96-96L0 128C0 75 43 32 96 32l64 0c17.7 0 32 14.3 32 32s-14.3 32-32 32z"></path>
           </svg>
