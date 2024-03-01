@@ -1,8 +1,9 @@
 import express from 'express';
 const router = express.Router();
 
-import { createNewUser } from '../controllers/userController.js';
+import { createNewUser, getUser } from '../controllers/userController.js';
+import verifyJWT from '../middleware/verifyJWT.js';
 
-router.post('/', createNewUser);
+router.route('/').post(createNewUser).get(verifyJWT, getUser);
 
 export default router;

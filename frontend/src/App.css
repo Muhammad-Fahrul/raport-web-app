@@ -53,12 +53,12 @@
   justify-content: left;
   transition: 0.5s ease-in-out;
   color: var(--af-white);
+  padding: 0.5em;
 }
 
 .card-img {
   width: 50px;
   height: 50px;
-  margin-left: 10px;
   border-radius: 100px;
   background: linear-gradient(#d7cfcf, #9198e5);
 }
@@ -66,7 +66,7 @@
 .card-text-box {
   width: calc(100% - 90px);
   margin-left: 10px;
-  font-family: "Poppins" sans-serif;
+  font-family: 'Poppins' sans-serif;
 }
 
 .card-text-content {

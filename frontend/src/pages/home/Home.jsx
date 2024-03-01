@@ -1,18 +1,22 @@
-import "./home.css";
-import { useSelector } from "react-redux";
-import Button from "../../components/button/Button";
+import './home.css';
+
+import { useSelector } from 'react-redux';
+
+import Button from '../../components/button/Button';
+import { selectCurrentToken } from '../auth/redux/authSlice';
+
 const Home = () => {
-  const userInfo = useSelector((state) => state.auth.userInfo);
+  const token = useSelector((state) => selectCurrentToken(state));
 
   return (
     <div className="container-home">
       <div className="wrapper-home">
         <div className="wrapper-home-item">
           <div>
-            <h1>{userInfo ? "Welcome" : "Raport"}</h1>
+            <h1>{token ? 'Welcome' : 'Raport'}</h1>
             <p>
-              {userInfo ? "Start " : "Easy way on "}
-              {userInfo ? (
+              {token ? 'Start ' : 'Easy way on '}
+              {token ? (
                 <strong>Your Journey</strong>
               ) : (
                 <strong>Marking Student Achievements</strong>
@@ -20,8 +24,8 @@ const Home = () => {
             </p>
           </div>
           <Button
-            url={userInfo ? `/me/${userInfo?._id}` : "/login"}
-            text={userInfo ? "Let's Go" : "Login"}
+            url={token ? `/me` : '/login'}
+            text={token ? "Let's Go" : 'Login'}
           />
         </div>
       </div>

@@ -28,6 +28,7 @@ const login = asyncHandler(async (req, res) => {
   const accessToken = jwt.sign(
     {
       UserInfo: {
+        userId: foundUser._id,
         username: foundUser.username,
         role: foundUser.role,
       },
@@ -55,8 +56,6 @@ const login = asyncHandler(async (req, res) => {
 const refresh = (req, res) => {
   const cookies = req.cookies;
 
-  console.log(cookies.jwt);
-
   if (!cookies?.jwt) return res.status(401).json({ message: 'Unauthorized' });
 
   const refreshToken = cookies.jwt;
@@ -76,6 +75,7 @@ const refresh = (req, res) => {
       const accessToken = jwt.sign(
         {
           UserInfo: {
+            userId: foundUser._id,
             username: foundUser.username,
             role: foundUser.role,
           },
@@ -89,4 +89,11 @@ const refresh = (req, res) => {
   );
 };
 
-export { login, refresh };
+const logout = (req, res) => {
+  const cookies = req.cookies;
+  if (!cookies?.jwt) return res.sendStatus(204); //No content
+  res.clearCookie('jwt', { httpOnly: true, sameSite: 'None', secure: true });
+  res.json({ message: 'Cookie cleared' });
+};
+
+export { login, logout, refresh };

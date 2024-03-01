@@ -1,9 +1,0 @@
-.card-img.rank {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  background: white;
-  color: var(--font-color);
-  font-size: 2em;
-  font-weight: 700;
-}

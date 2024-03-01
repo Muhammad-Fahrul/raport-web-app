@@ -5,14 +5,12 @@ import asyncHandler from 'express-async-handler';
 const createNewUser = asyncHandler(async (req, res) => {
   const { username, phoneNumber, password } = req.body;
 
-  // Check if user already exists
   let user = await User.findOne({ username });
 
   if (user) {
     return res.status(400).json({ message: 'User already exists' });
   }
 
-  // Create new user
   user = new User({
     username,
     phoneNumber,
@@ -20,15 +18,32 @@ const createNewUser = asyncHandler(async (req, res) => {
     role: 'mentor',
   });
 
-  // Hash password
   const salt = await bcrypt.genSalt(10);
   user.password = await bcrypt.hash(password, salt);
 
-  // Save user to database
   await user.save();
 
-  console.log(user);
-  res.status(201).json({ data: { user } });
+  if (user) {
+    res.status(201).json({ message: `New user ${username} created` });
+  } else {
+    res.status(400).json({ message: 'Invalid user data received' });
+  }
 });
 
-export { createNewUser };
+const getUser = asyncHandler(async (req, res) => {
+  const username = req.user;
+
+  if (!username) {
+    return res.status(401).json({ message: 'Unauthorized' });
+  }
+
+  const user = await User.findOne({ username }).select('-password');
+
+  if (!user) {
+    return res.status(400).json({ message: 'User not found' });
+  }
+
+  res.json({ user });
+});
+
+export { createNewUser, getUser };

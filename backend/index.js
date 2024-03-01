@@ -6,7 +6,7 @@ import cookieParser from 'cookie-parser';
 import connectDB from './config/db.js';
 import authRoutes from './routes/authRoutes.js';
 import userRoutes from './routes/userRoutes.js';
-import mentorRoutes from './routes/mentorRoutes.js';
+import studentRoutes from './routes/studentRoutes.js';
 
 import { errorHandler, notFound } from './middleware/errorMiddleware.js';
 
@@ -47,7 +47,7 @@ app.use(cookieParser());
 // Routes
 app.use('/api/auth', authRoutes);
 app.use('/api/users', userRoutes);
-app.use('/api/mentors', mentorRoutes);
+app.use('/api/students', studentRoutes);
 
 app.use(notFound);
 app.use(errorHandler);

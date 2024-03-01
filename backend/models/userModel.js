@@ -20,8 +20,8 @@ const UserSchema = new mongoose.Schema({
     enum: ['mentor', 'student'],
     required: true,
   },
-  mentor: {
-    type: String,
+  mentorId: {
+    type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
 });
