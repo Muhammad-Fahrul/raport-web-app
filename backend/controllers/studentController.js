@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 
 const createNewStudent = asyncHandler(async (req, res) => {
-  const { username, phoneNumber, password } = req.body;
+  const { username, phone, password } = req.body;
 
   if (!req.user) {
     return res.status(401).json({ message: 'Unauthorized' });
@@ -18,7 +18,7 @@ const createNewStudent = asyncHandler(async (req, res) => {
   // Create new user
   student = new User({
     username,
-    phoneNumber,
+    phone,
     password,
     role: 'student',
     mentorId: req.userId,
@@ -38,16 +38,28 @@ const createNewStudent = asyncHandler(async (req, res) => {
   }
 });
 
-const getAllStudent = asyncHandler(async (req, res) => {
-  const students = await User.find({ mentorId: req.userId })
-    .select('-password')
-    .lean();
+const getStudentsByMentor = asyncHandler(async (req, res) => {
+  const userId = req.userId;
 
-  if (!students) {
-    return res.status(400).json({ message: 'No student found' });
+  const user = await User.findById(userId);
+
+  let mentorId;
+
+  if (user.role !== 'mentor') {
+    mentorId = user.mentorId;
+  } else {
+    mentorId = userId;
   }
 
-  res.json({ students });
+  const students = await User.find({ mentorId })
+    .select('-password')
+    .populate('raport');
+
+  if (!students?.length) {
+    return res.status(400).json({ message: 'student not found' });
+  }
+
+  return res.json({ students });
 });
 
 const deleteStudentById = asyncHandler(async (req, res) => {
@@ -55,8 +67,6 @@ const deleteStudentById = asyncHandler(async (req, res) => {
   const { id } = req.body;
 
   const student = await User.findById(id);
-
-  console.log(id, mentorId);
 
   if (!student) {
     return res.status(400).json({ message: 'User not found' });
@@ -69,9 +79,9 @@ const deleteStudentById = asyncHandler(async (req, res) => {
 
   const result = await student.deleteOne();
 
-  const reply = `Username ${result.username} with ID ${result._id} deleted`;
+  const message = `Username ${result.username} with ID ${result._id} deleted`;
 
-  res.json(reply);
+  res.json({ message });
 });
 
-export { createNewStudent, getAllStudent, deleteStudentById };
+export { createNewStudent, getStudentsByMentor, deleteStudentById };

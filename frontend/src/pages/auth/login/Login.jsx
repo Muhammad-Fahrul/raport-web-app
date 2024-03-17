@@ -2,7 +2,7 @@ import './login.css';
 
 import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 
 import Loader from '../../../components/loader/Loader.jsx';
 
@@ -13,6 +13,7 @@ const Login = () => {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errMsg, setErrMsg] = useState('');
+  const location = useLocation();
 
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -34,8 +35,7 @@ const Login = () => {
           password,
         }).unwrap();
         dispatch(setCredentials({ accessToken }));
-        console.log(accessToken);
-        navigate('/');
+        navigate('/', { state: { from: location }, replace: true });
       } catch (err) {
         console.log(err);
         if (!err) {

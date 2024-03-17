@@ -6,7 +6,7 @@ const UserSchema = new mongoose.Schema({
     required: true,
     unique: true,
   },
-  phoneNumber: {
+  phone: {
     type: String,
     required: true,
     unique: true,
@@ -24,8 +24,22 @@ const UserSchema = new mongoose.Schema({
     type: mongoose.Schema.Types.ObjectId,
     ref: 'User',
   },
+  raport: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Raport' }],
 });
 
+UserSchema.pre('save', async function (next) {
+  const studentCount = await mongoose.models.User.countDocuments({
+    mentorId: this.mentorId,
+  });
+  if (studentCount >= 3) {
+    const err = new Error(
+      'Batas jumlah item dalam koleksi Raport telah tercapai'
+    );
+    next(err);
+  } else {
+    next();
+  }
+});
 const User = mongoose.model('User', UserSchema);
 
 export default User;

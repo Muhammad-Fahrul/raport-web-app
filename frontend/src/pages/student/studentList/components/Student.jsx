@@ -1,47 +1,50 @@
-import { useSelector } from 'react-redux';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
+import './student.css';
 
-import {
-  selectStudentById,
-  useDeleteStudentMutation,
-} from '../../redux/studentApiSlice';
+import { useLocation, useNavigate } from 'react-router-dom';
+
+import { useGetStudentsWithRaportsQuery } from '../../redux/studentApiSlice';
 
 const Student = ({ studentId }) => {
   const navigate = useNavigate();
-  const student = useSelector((state) => selectStudentById(state, studentId));
 
-  const [deleteStudent, { isLoading, isSuccess, isError }] =
-    useDeleteStudentMutation();
+  const { student } = useGetStudentsWithRaportsQuery('studentList', {
+    selectFromResult: ({ data }) => ({
+      student: data?.entities[studentId],
+    }),
+  });
 
-  const handleDelete = async () => {
-    confirm(`are you sure to delete ${student.username}`) &&
-      (await deleteStudent({ id: student.id }));
-  };
+  const location = useLocation();
 
-  useEffect(() => {
-    if (isSuccess) {
-      navigate('/students');
-    }
-  }, [isSuccess, navigate]);
+  const handleToRaport = () =>
+    navigate(`/students/${student.username}/raports`, {
+      state: { from: location },
+    });
 
   let content = (
-    <li className="wrapper-card">
-      <div className="card-img" style={{ width: '55px' }}></div>
-      <div className="card-text-box">
-        <p className="card-title">{student.username}</p>
+    <li className="container-student">
+      <div className="top">
+        <p
+          className="description"
+          onClick={() => navigate(`/students/${student.username}`)}
+        >
+          {student.username}
+        </p>
+        <div className="last-raport">
+          {student?.raport.length > 0 ? (
+            <>
+              <p>{student.raport[student.raport.length - 1].chapter}</p>
+              <p>{student.raport[student.raport.length - 1].verse}</p>
+            </>
+          ) : (
+            <>
+              <p>0</p>
+              <p>0</p>
+            </>
+          )}
+        </div>
       </div>
-      <button
-        onClick={handleDelete}
-        style={{
-          color: 'black',
-          padding: '.5em 1em',
-          borderRadius: '10px',
-          outline: 'none',
-          border: 'none',
-        }}
-      >
-        Delete
+      <button className="raport-btn" title="raport" onClick={handleToRaport}>
+        <b>R</b>
       </button>
     </li>
   );

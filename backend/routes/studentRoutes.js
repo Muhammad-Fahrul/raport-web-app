@@ -4,7 +4,7 @@ const router = express.Router();
 import {
   createNewStudent,
   deleteStudentById,
-  getAllStudent,
+  getStudentsByMentor,
 } from '../controllers/studentController.js';
 import verifyJWT from '../middleware/verifyJWT.js';
 
@@ -12,7 +12,7 @@ router.use(verifyJWT);
 router
   .route('/')
   .post(createNewStudent)
-  .get(getAllStudent)
+  .get(getStudentsByMentor)
   .delete(deleteStudentById);
 
 export default router;

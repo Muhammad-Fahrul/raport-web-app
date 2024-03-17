@@ -4,7 +4,10 @@
   align-items: center;
 }
 .singup {
-  padding: 1em 2em;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0.5em 0em;
   color: #000;
   text-transform: uppercase;
   letter-spacing: 2px;
@@ -12,6 +15,7 @@
   font-weight: bold;
   font-size: x-large;
   margin-top: 1.5em;
+  text-align: center;
 }
 
 .student-new-card {

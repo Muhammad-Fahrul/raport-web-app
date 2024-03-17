@@ -1,8 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
-import { Outlet } from 'react-router-dom';
+import { Outlet, useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-
-import Button from '../components/button/Button';
 
 import { useRefreshMutation } from '../pages/auth/redux/authApiSlice';
 import { selectCurrentToken } from '../pages/auth/redux/authSlice';
@@ -10,6 +8,7 @@ import { selectCurrentToken } from '../pages/auth/redux/authSlice';
 const PersistLogin = () => {
   const token = useSelector((state) => selectCurrentToken(state));
   const effectRan = useRef(false);
+  const navigate = useNavigate();
 
   const [trueSuccess, setTrueSuccess] = useState(false);
 
@@ -44,10 +43,10 @@ const PersistLogin = () => {
     content = <p>Loading...</p>;
   } else if (isError) {
     content = (
-      <>
+      <div style={{ display: 'flex', gap: '.3em' }}>
         <p>{`${error?.data?.message} - `}</p>
-        <Button url="/login" text="Login" />
-      </>
+        <button onClick={() => navigate('/login')}>Login</button>
+      </div>
     );
   } else if (isSuccess && trueSuccess) {
     content = <Outlet />;

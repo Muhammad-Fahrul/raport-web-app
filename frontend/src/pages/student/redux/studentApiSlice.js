@@ -8,15 +8,7 @@ const initialState = studentsAdapter.getInitialState();
 
 export const studentApiSlice = apiSlice.injectEndpoints({
   endpoints: (builder) => ({
-    addNewStudent: builder.mutation({
-      query: (data) => ({
-        url: `${STUDENT_URL}`,
-        method: 'POST',
-        body: data,
-      }),
-      invalidatesTags: [{ type: 'User', id: 'LIST' }],
-    }),
-    getAllStudent: builder.query({
+    getStudentsWithRaports: builder.query({
       query: () => `${STUDENT_URL}`,
       validateStatus: (response, result) => {
         return response.status === 200 && !result.isError;
@@ -31,11 +23,24 @@ export const studentApiSlice = apiSlice.injectEndpoints({
       providesTags: (result, err, arg) => {
         if (result?.ids) {
           return [
+            { type: 'Raport', id: 'LIST' },
             { type: 'User', id: 'LIST' },
             ...result.ids.map((id) => ({ type: 'User', id })),
           ];
-        } else return [{ type: 'User', id: 'LIST' }];
+        } else
+          return [
+            { type: 'Raport', id: 'LIST' },
+            { type: 'User', id: 'LIST' },
+          ];
       },
+    }),
+    addNewStudent: builder.mutation({
+      query: (data) => ({
+        url: `${STUDENT_URL}`,
+        method: 'POST',
+        body: data,
+      }),
+      invalidatesTags: [{ type: 'User', id: 'LIST' }],
     }),
     deleteStudent: builder.mutation({
       query: ({ id }) => ({
@@ -51,11 +56,11 @@ export const studentApiSlice = apiSlice.injectEndpoints({
 export const {
   useAddNewStudentMutation,
   useDeleteStudentMutation,
-  useGetAllStudentQuery,
+  useGetStudentsWithRaportsQuery,
 } = studentApiSlice;
 
 export const selectStudentsResult =
-  studentApiSlice.endpoints.getAllStudent.select();
+  studentApiSlice.endpoints.getStudentsWithRaports.select();
 
 const selectStudentsData = createSelector(
   selectStudentsResult,

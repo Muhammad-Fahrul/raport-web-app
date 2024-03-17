@@ -3,7 +3,7 @@ import User from '../models/userModel.js';
 import asyncHandler from 'express-async-handler';
 
 const createNewUser = asyncHandler(async (req, res) => {
-  const { username, phoneNumber, password } = req.body;
+  const { username, phone, password } = req.body;
 
   let user = await User.findOne({ username });
 
@@ -13,7 +13,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 
   user = new User({
     username,
-    phoneNumber,
+    phone,
     password,
     role: 'mentor',
   });
@@ -31,7 +31,7 @@ const createNewUser = asyncHandler(async (req, res) => {
 });
 
 const getUser = asyncHandler(async (req, res) => {
-  const username = req.user;
+  const username = req.params.username;
 
   if (!username) {
     return res.status(401).json({ message: 'Unauthorized' });

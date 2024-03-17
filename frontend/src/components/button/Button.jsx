@@ -1,13 +1,14 @@
-import { Link } from "react-router-dom";
-import "./button.css";
+import { Link, useLocation } from 'react-router-dom';
+import './button.css';
 const Button = ({ url, text }) => {
+  const location = useLocation();
   return (
-    <div className="main-btn">
-      <Link to={url}>
-        <button>
+    <div className="container-main-btn">
+      <Link to={url} state={{ from: location }}>
+        <button className="main-btn">
           {text}
-          <div className="wrapper-arrow">
-            <div className="arrow"></div>
+          <div className="arrow">
+            <div className="__arrow"></div>
           </div>
         </button>
       </Link>

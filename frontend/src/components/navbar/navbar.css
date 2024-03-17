@@ -1,31 +1,58 @@
-.navbar-container {
+.container-navbar {
   position: sticky;
   top: 0;
-  background-color: var(--bg-color);
   z-index: 99;
+  background-color: white;
 }
 
-.navbar-wrapper {
+.container-navbar.shadow {
+  box-shadow: 0px 1px 20px 0px black;
+}
+
+.container-navbar .wrapper {
   width: 100%;
   display: flex;
   justify-content: space-between;
-  padding: 0.5em 1em;
+  padding: 0 0.5em;
   backface-visibility: hidden;
-  -webkit-box-shadow: 0px 4px var(--main-color);
-  box-shadow: 0px 4px var(--main-color);
+  height: 60px;
 }
 
-.navbar-item {
+.container-navbar .wrapper h1 {
   display: flex;
   justify-content: center;
   align-items: center;
 }
 
-.navbar-item.right {
-  gap: 0.3em;
+.container-navbar .left,
+.container-navbar .right {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 
-.navigation-card {
+.container-navbar .right .nav-btns .profile {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  background-color: inherit;
+  font-size: 1.2rem;
+  font-weight: 900;
+  text-transform: capitalize;
+  border: 1px solid white;
+  transition: all 0.2s;
+}
+
+.container-navbar .right .nav-btns .profile:hover {
+  color: white;
+  background-color: var(--hover-color);
+  border: none;
+}
+
+/* .navigation-card {
   width: fit-content;
   height: fit-content;
   display: flex;
@@ -54,8 +81,9 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  width: 50px;
-  height: 50px;
+  border: 3px solid black;
+  width: 30px;
+  height: 30px;
   overflow: hidden;
   background-color: rgb(252, 252, 252);
   padding: 15px;
@@ -63,7 +91,10 @@
   cursor: pointer;
   text-decoration: none;
   transition: all 0.3s;
+  transform: rotate(-45deg);
 }
 .tab:hover {
-  background-color: rgb(223, 223, 223);
-}
+  background-color: black;
+  color: white;
+  transform: rotate(0);
+} */

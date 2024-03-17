@@ -1,0 +1,36 @@
+.container-student {
+  display: flex;
+  justify-content: space-between;
+  border: 2px solid black;
+  padding: 0.5em 1em;
+  align-items: center;
+  border-radius: 5px;
+  gap: 1em;
+}
+
+.container-student .top {
+  flex: 2;
+}
+
+.container-student .top .description {
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  border-bottom: 1px solid white;
+}
+
+.last-raport {
+  display: flex;
+  justify-content: space-between;
+  border-bottom: 1px solid black;
+}
+
+.raport-btn {
+  color: white;
+  width: 30px;
+  height: 30px;
+  border-radius: 100px;
+  outline: none;
+  border: none;
+  background-color: var(--eer-black);
+}

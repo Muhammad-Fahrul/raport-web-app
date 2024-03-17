@@ -1,0 +1,27 @@
+.table-raport {
+  width: 100%;
+  margin-top: 2px;
+  border-collapse: collapse;
+}
+
+.table-raport thead th:first-child {
+  border-left: none;
+}
+.table-raport thead th:last-child {
+  border-right: none;
+}
+
+.table-raport thead th {
+  width: 70px;
+  background-color: black;
+  color: white;
+  padding: 0.5em;
+  border-left: 2px solid white;
+  border-right: 2px solid white;
+}
+
+.table-raport tbody td {
+  padding: 0.5em 0 0.2em;
+  border-bottom: 1px solid black;
+  text-align: center;
+}

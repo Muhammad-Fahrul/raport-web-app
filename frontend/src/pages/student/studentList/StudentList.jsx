@@ -7,11 +7,15 @@ import Student from './components/Student.jsx';
 import Loader from '../../../components/loader/Loader.jsx';
 import Error from '../../../components/error/Error.jsx';
 
-import { useGetAllStudentQuery } from '../redux/studentApiSlice.js';
+import { useGetStudentsWithRaportsQuery } from '../redux/studentApiSlice.js';
 
 const StudentList = () => {
   const { data, isSuccess, isLoading, isError, error } =
-    useGetAllStudentQuery();
+    useGetStudentsWithRaportsQuery('studentList', {
+      pollingInterval: 60000,
+      refetchOnFocus: true,
+      refetchOnMountOrArgChange: true,
+    });
 
   let tableContent;
   if (isLoading) {
@@ -28,9 +32,7 @@ const StudentList = () => {
   }
   return (
     <div className="container-students">
-      <h1>My students</h1>
-
-      <ul className="container-card" style={{ paddingBlock: '1em' }}>
+      <ul className="students" style={{ paddingBlock: '1em' }}>
         {tableContent}
       </ul>
 

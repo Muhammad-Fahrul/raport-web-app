@@ -1,6 +1,6 @@
 import './newStudent.css';
 
-import { useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 
 import Loader from '../../../components/loader/Loader.jsx';
 
@@ -8,10 +8,12 @@ import { useAddNewStudentMutation } from '../redux/studentApiSlice.js';
 
 const NewStudent = () => {
   const [username, setUsername] = useState('');
-  const [phoneNumber, setphoneNumber] = useState('');
+  const [phone, setphone] = useState('');
   const [password, setPassword] = useState('');
+  const [err, setErr] = useState(null);
 
-  const [addNewStudent, { isLoading }] = useAddNewStudentMutation();
+  const [addNewStudent, { isLoading, isError, error }] =
+    useAddNewStudentMutation();
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -19,25 +21,37 @@ const NewStudent = () => {
       try {
         const res = await addNewStudent({
           username,
-          phoneNumber,
+          phone,
           password,
         }).unwrap();
         alert(`${res.message}`);
         setUsername('');
-        setphoneNumber('');
+        setphone('');
         setPassword('');
       } catch (err) {
-        console.error(err?.data?.message || err.error);
         alert(`${username} gagal ditambahkan`);
       }
     };
     addStudent();
   };
+
+  useEffect(() => {
+    setErr(null);
+  }, [username, password, phone]);
+
+  useEffect(() => {
+    if (isError) {
+      setErr(error.data.message);
+    }
+  }, [isError, error]);
+
   return (
     <div className="student-new-container">
       <form onSubmit={handleSubmit} className="student-new-card create-student">
-        <a className="singup">New Student</a>
-
+        <div className="singup">
+          <h1 style={{ fontSize: '1em' }}>New Student</h1>
+          {err && <p style={{ fontSize: '.4em', color: 'red' }}>{err}</p>}
+        </div>
         <div className="inputBox">
           <input
             type="text"
@@ -52,8 +66,8 @@ const NewStudent = () => {
           <input
             type="text"
             required="required"
-            value={phoneNumber}
-            onChange={(e) => setphoneNumber(e.target.value)}
+            value={phone}
+            onChange={(e) => setphone(e.target.value)}
           />
           <span>Number</span>
         </div>
